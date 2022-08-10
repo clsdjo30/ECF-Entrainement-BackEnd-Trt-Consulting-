@@ -1,28 +1,32 @@
 {
-  "name": "trtconsulting",
-  "version": "1.0.0",
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^6.1.2",
     "@hotwired/stimulus": "^3.1.0",
     "@popperjs/core": "^2.11.5",
     "@symfony/stimulus-bridge": "^3.2.1",
     "@symfony/webpack-encore": "^3.0.0",
+    "bootstrap": "^5.2.0",
+    "core-js": "^3.24.1",
+    "jquery": "^3.6.0",
+    "@fortawesome/fontawesome-free": "^6.1.2",
     "node-sass": "^7.0.1",
-    "sass-loader": "^13.0.2"
+    "regenerator-runtime": "^0.13.9",
+    "sass-loader": "^13.0.2",
+    "webpack-notifier": "^1.15.0"
   },
+  "license": "UNLICENSED",
+  "private": "true",
   "scripts": {
     "dev-server": "encore dev-server",
     "dev": "encore dev",
     "watch": "encore dev --watch",
     "build": "encore production --progress"
   },
-  "dependencies": {
-    "autoprefixer": "^10.4.8",
-    "bootstrap": "^5.2.0",
-    "postcss-loader": "^7.0.1"
-  },
   "engines": {
     "node": "v16.16.0",
-    "npm": "8.3.1"
+    "npm": "8.16.0"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.8",
+    "postcss-loader": "^7.0.1"
   }
 }
