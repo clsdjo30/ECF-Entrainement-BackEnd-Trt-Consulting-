@@ -3,19 +3,22 @@
 namespace App\Tests\Unit\Entity;
 
 use App\Entity\Address;
+use App\Entity\Company;
 use PHPUnit\Framework\TestCase;
 
 class AddressTest extends TestCase
 {
-    public function testaddressIsTrue(): void
+    public function testAddressIsTrue(): void
     {
+        $company = new Company();
         $address = (new Address())
             ->setStreetNumber(10)
             ->setStreetType('rue')
             ->setStreetName('du test')
             ->setZipCode(34000)
             ->setCity('Montpellier')
-            ->setCountry('France');
+            ->setCountry('France')
+            ->setCompany($company);
 
 
         $this->assertTrue((bool)$address->getStreetNumber());
@@ -24,6 +27,7 @@ class AddressTest extends TestCase
         $this->assertTrue((bool)$address->getZipCode());
         $this->assertTrue((bool)$address->getCity());
         $this->assertTrue((bool)$address->getCountry());
+        $this->assertTrue((bool)$address->getCompany());
 
     }
 
@@ -57,5 +61,6 @@ class AddressTest extends TestCase
         $this->assertEmpty($address->getZipCode());
         $this->assertEmpty($address->getCity());
         $this->assertEmpty($address->getCountry());
+        $this->assertEmpty($address->getCompany());
     }
 }

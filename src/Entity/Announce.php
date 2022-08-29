@@ -48,6 +48,10 @@ class Announce
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
+    #[ORM\ManyToOne(inversedBy: 'announce_id')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Recruiter $recruiter = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -181,6 +185,18 @@ class Announce
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getRecruiter(): ?Recruiter
+    {
+        return $this->recruiter;
+    }
+
+    public function setRecruiter(?Recruiter $recruiter): self
+    {
+        $this->recruiter = $recruiter;
 
         return $this;
     }

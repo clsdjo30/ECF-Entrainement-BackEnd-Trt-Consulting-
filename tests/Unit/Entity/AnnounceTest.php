@@ -3,6 +3,7 @@
 namespace App\Tests\Unit\Entity;
 
 use App\Entity\Announce;
+use App\Entity\Recruiter;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 
@@ -10,6 +11,8 @@ class AnnounceTest extends TestCase
 {
     public function testAnnounceIsTrue(): void
     {
+        $recruiter = new Recruiter();
+
         $announce = (new Announce())
             ->setTitle('annonce de test')
             ->setDescription('description de test')
@@ -20,7 +23,8 @@ class AnnounceTest extends TestCase
             ->setSlug('annonce-de-test')
             ->setIsValid(true)
             ->setCreatedAt(new DateTime())
-            ->setUpdatedAt(new DateTime);
+            ->setUpdatedAt(new DateTime)
+            ->setRecruiter($recruiter);
 
         $this->assertTrue((bool)$announce->getTitle());
         $this->assertTrue((bool)$announce->getDescription());
@@ -32,6 +36,7 @@ class AnnounceTest extends TestCase
         $this->assertTrue((bool)$announce->isIsValid());
         $this->assertTrue((bool)$announce->getCreatedAt());
         $this->assertTrue((bool)$announce->getUpdatedAt());
+        $this->assertTrue((bool)$announce->getRecruiter());
 
     }
 
