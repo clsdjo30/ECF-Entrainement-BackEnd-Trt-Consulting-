@@ -9,12 +9,18 @@ class HomeTest extends WebTestCase
     public function testShouldDisplayHomepage(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/');
-        $client->followRedirects();
-
-        self::assertResponseIsSuccessful();
-        self::assertSelectorTextContains('h1', 'pour vous servir');
+        $client->request('GET', '/');
 
 
+        self::assertPageTitleSame('TrT Consulting - Home Page');
+
+
+    }
+
+    public function test404(): void
+    {
+        $client = self::createClient();
+        $client->request('GET', '/404');
+        self::assertTrue($client->getResponse()->isNotFound());
     }
 }
