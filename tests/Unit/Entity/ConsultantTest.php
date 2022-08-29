@@ -2,18 +2,17 @@
 
 namespace App\Tests\Unit\Entity;
 
-use App\Entity\Candidate;
+use App\Entity\Consultant;
 use PHPUnit\Framework\TestCase;
 
-class CandidateTest extends TestCase
+class ConsultantTest extends TestCase
 {
     public function testCandidateIsTrue(): void
     {
-        $candidate = (new Candidate())
+        $candidate = (new Consultant())
             ->setFirstname('prenom')
-            ->setLastname('nom de famille')
-            ->setCvFile('Mon Super CV');
-        $this->assertTrue((bool)$candidate->getCvFile('Mon Super CV'));
+            ->setLastname('nom de famille');
+
         $this->assertTrue((bool)$candidate->getFirstname('prenom'));
         $this->assertTrue((bool)$candidate->getLastname('nom de famille'));
 
@@ -21,11 +20,10 @@ class CandidateTest extends TestCase
 
     public function testCandidateIsFalse(): void
     {
-        $candidate = (new Candidate())
+        $candidate = (new Consultant())
             ->setFirstname('prenom')
-            ->setLastname('nom de famille')
-            ->setCvFile('Mon Super CV');
-        $this->assertNotSame('false', (bool)$candidate->getCvFile());
+            ->setLastname('nom de famille');
+
         $this->assertNotSame('false', (bool)$candidate->getFirstname());
         $this->assertNotSame('false', (bool)$candidate->getLastname());
 
@@ -33,9 +31,8 @@ class CandidateTest extends TestCase
 
     public function testCandidateIsEmpty(): void
     {
-        $candidate = new Candidate();
+        $candidate = new Consultant();
 
-        $this->assertEmpty((bool)$candidate->getCvFile());
         $this->assertEmpty((bool)$candidate->getFirstname());
         $this->assertEmpty((bool)$candidate->getLastname());
     }
