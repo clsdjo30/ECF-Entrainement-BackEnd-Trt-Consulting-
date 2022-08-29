@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Tests\Unit\Entity;
+
+use App\Entity\Announce;
+use DateTime;
+use PHPUnit\Framework\TestCase;
+
+class AnnounceTest extends TestCase
+{
+    public function testAnnounceIsTrue(): void
+    {
+        $announce = (new Announce())
+            ->setTitle('annonce de test')
+            ->setDescription('description de test')
+            ->setSalary(2500)
+            ->setHourly('39 heures')
+            ->setBenefits('logé')
+            ->setExperience('5 ans minimum')
+            ->setSlug('annonce-de-test')
+            ->setIsValid(true)
+            ->setCreatedAt(new DateTime())
+            ->setUpdatedAt(new DateTime);
+
+        $this->assertTrue((bool)$announce->getTitle());
+        $this->assertTrue((bool)$announce->getDescription());
+        $this->assertTrue((bool)$announce->getSalary());
+        $this->assertTrue((bool)$announce->getHourly());
+        $this->assertTrue((bool)$announce->getBenefits());
+        $this->assertTrue((bool)$announce->getExperience());
+        $this->assertTrue((bool)$announce->getSlug());
+        $this->assertTrue((bool)$announce->isIsValid());
+        $this->assertTrue((bool)$announce->getCreatedAt());
+        $this->assertTrue((bool)$announce->getUpdatedAt());
+
+    }
+
+    public function testAnnounceIsFalse(): void
+    {
+        $announce = (new Announce())
+            ->setTitle('annonce de test')
+            ->setDescription('description de test')
+            ->setSalary(2500)
+            ->setHourly('39 heures')
+            ->setBenefits('logé')
+            ->setExperience('5 ans minimum')
+            ->setSlug('annonce-de-test')
+            ->setIsValid(true)
+            ->setCreatedAt(new DateTime())
+            ->setUpdatedAt(new DateTime());
+
+        $this->assertNotSame('false', (bool)$announce->getTitle());
+        $this->assertNotSame('false', (bool)$announce->getDescription());
+        $this->assertNotSame(1000, (bool)$announce->getSalary());
+        $this->assertNotSame('false', (bool)$announce->getHourly());
+        $this->assertNotSame('false', (bool)$announce->getBenefits());
+        $this->assertNotSame('false', (bool)$announce->getExperience());
+        $this->assertNotSame('false', (bool)$announce->getSlug());
+        $this->assertNotSame(new DateTime(), (bool)$announce->getCreatedAt());
+        $this->assertNotSame(new DateTime(), (bool)$announce->getUpdatedAt());
+
+    }
+
+    public function testAnnounceIsEmpty(): void
+    {
+        $announce = new Announce();
+
+        $this->assertEmpty($announce->getTitle());
+        $this->assertEmpty($announce->getDescription());
+        $this->assertEmpty($announce->getSalary());
+        $this->assertEmpty($announce->getHourly());
+        $this->assertEmpty($announce->getBenefits());
+        $this->assertEmpty($announce->getExperience());
+        $this->assertEmpty($announce->getSlug());
+        $this->assertEmpty($announce->getCreatedAt());
+        $this->assertEmpty($announce->getUpdatedAt());
+    }
+}
