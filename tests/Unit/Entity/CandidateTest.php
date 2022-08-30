@@ -2,6 +2,7 @@
 
 namespace App\Tests\Unit\Entity;
 
+use App\Entity\ApplyValidation;
 use App\Entity\Candidate;
 use PHPUnit\Framework\TestCase;
 
@@ -38,5 +39,18 @@ class CandidateTest extends TestCase
         $this->assertEmpty((bool)$candidate->getCvFile());
         $this->assertEmpty((bool)$candidate->getFirstname());
         $this->assertEmpty((bool)$candidate->getLastname());
+    }
+
+    public function testAddAndRemoveApplyAnnounceIsTrue(): void
+    {
+        $newApply = new ApplyValidation();
+        $candidate = (new Candidate())
+            ->addApplyValidation($newApply);
+
+        $this->assertTrue((bool)$candidate->getApplyValidations());
+
+        $candidate->removeApplyValidation($newApply);
+
+        $this->assertCount(0, $candidate->getApplyValidations());
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Tests\Unit\Entity;
 
 use App\Entity\Announce;
+use App\Entity\ApplyValidation;
 use App\Entity\Recruiter;
 use DateTime;
 use PHPUnit\Framework\TestCase;
@@ -79,5 +80,18 @@ class AnnounceTest extends TestCase
         $this->assertEmpty($announce->getSlug());
         $this->assertEmpty($announce->getCreatedAt());
         $this->assertEmpty($announce->getUpdatedAt());
+    }
+
+    public function testAddAndRemoveApplyAnnounceIsTrue(): void
+    {
+        $newApply = new ApplyValidation();
+        $announce = (new Announce())
+            ->addAppliedCandidate($newApply);
+
+        $this->assertTrue((bool)$announce->getAppliedCandidates());
+
+        $announce->removeAppliedCandidate($newApply);
+
+        $this->assertCount(0, $announce->getAppliedCandidates());
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AnnounceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -51,6 +53,14 @@ class Announce
     #[ORM\ManyToOne(inversedBy: 'announce_id')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Recruiter $recruiter = null;
+
+    #[ORM\OneToMany(mappedBy: 'announce', targetEntity: ApplyValidation::class, orphanRemoval: true)]
+    private Collection $appliedCandidates;
+
+    public function __construct()
+    {
+        $this->appliedCandidates = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -197,6 +207,36 @@ class Announce
     public function setRecruiter(?Recruiter $recruiter): self
     {
         $this->recruiter = $recruiter;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ApplyValidation>
+     */
+    public function getAppliedCandidates(): Collection
+    {
+        return $this->appliedCandidates;
+    }
+
+    public function addAppliedCandidate(ApplyValidation $appliedCandidate): self
+    {
+        if (!$this->appliedCandidates->contains($appliedCandidate)) {
+            $this->appliedCandidates->add($appliedCandidate);
+            $appliedCandidate->setAnnounce($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAppliedCandidate(ApplyValidation $appliedCandidate): self
+    {
+        if ($this->appliedCandidates->removeElement($appliedCandidate)) {
+            // set the owning side to null (unless already changed)
+            if ($appliedCandidate->getAnnounce() === $this) {
+                $appliedCandidate->setAnnounce(null);
+            }
+        }
 
         return $this;
     }
