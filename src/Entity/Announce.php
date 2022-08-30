@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AnnounceRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -41,10 +42,10 @@ class Announce
     private ?bool $isValid = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdAt = null;
+    private ?DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $updatedAt = null;
+    private ?DateTimeInterface $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'announces')]
     #[ORM\JoinColumn(nullable: false)]
@@ -56,6 +57,9 @@ class Announce
 
     #[ORM\OneToMany(mappedBy: 'announce', targetEntity: ApplyValidation::class, orphanRemoval: true)]
     private Collection $appliedCandidates;
+
+    #[ORM\OneToOne(mappedBy: 'announce', cascade: ['persist', 'remove'])]
+    private ?PublishValidation $publishValidation = null;
 
     public function __construct()
     {
@@ -163,24 +167,24 @@ class Announce
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -237,6 +241,23 @@ class Announce
                 $appliedCandidate->setAnnounce(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPublishValidation(): ?PublishValidation
+    {
+        return $this->publishValidation;
+    }
+
+    public function setPublishValidation(PublishValidation $publishValidation): self
+    {
+        // set the owning side of the relation if necessary
+        if ($publishValidation->getAnnounce() !== $this) {
+            $publishValidation->setAnnounce($this);
+        }
+
+        $this->publishValidation = $publishValidation;
 
         return $this;
     }

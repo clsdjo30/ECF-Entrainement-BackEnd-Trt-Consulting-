@@ -4,6 +4,7 @@ namespace App\Tests\Unit\Entity;
 
 use App\Entity\Announce;
 use App\Entity\Company;
+use App\Entity\PublishValidation;
 use App\Entity\Recruiter;
 use PHPUnit\Framework\TestCase;
 
@@ -36,4 +37,20 @@ class RecruiterTest extends TestCase
 
         $this->assertEmpty($recruiter->getAnnounceId());
     }
+
+    public function testAnnouncePublishValidationIsTrue(): void
+    {
+        $newPublish = new PublishValidation();
+        $recruiter = (new Recruiter())
+            ->addPublishValidation($newPublish);
+
+        $this->assertTrue((bool)$recruiter->getPublishValidations());
+
+        $recruiter->removePublishValidation($newPublish);
+
+        $this->assertCount(0, $recruiter->getPublishValidations());
+
+
+    }
+
 }

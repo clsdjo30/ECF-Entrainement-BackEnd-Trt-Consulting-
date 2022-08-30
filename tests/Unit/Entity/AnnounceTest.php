@@ -4,6 +4,7 @@ namespace App\Tests\Unit\Entity;
 
 use App\Entity\Announce;
 use App\Entity\ApplyValidation;
+use App\Entity\PublishValidation;
 use App\Entity\Recruiter;
 use DateTime;
 use PHPUnit\Framework\TestCase;
@@ -93,5 +94,14 @@ class AnnounceTest extends TestCase
         $announce->removeAppliedCandidate($newApply);
 
         $this->assertCount(0, $announce->getAppliedCandidates());
+    }
+
+    public function testAnnounceIsValidateIsTrue(): void
+    {
+        $validation = new PublishValidation();
+        $announce = (new Announce())
+            ->setPublishValidation($validation);
+
+        $this->assertTrue((bool)$announce->getPublishValidation());
     }
 }
