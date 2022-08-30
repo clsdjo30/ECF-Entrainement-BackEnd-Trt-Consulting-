@@ -27,6 +27,9 @@ class Candidate
     #[ORM\OneToMany(mappedBy: 'candidate', targetEntity: ApplyValidation::class, orphanRemoval: true)]
     private Collection $applyValidations;
 
+    #[ORM\OneToOne(mappedBy: 'candidate', cascade: ['persist', 'remove'])]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->applyValidations = new ArrayCollection();
@@ -99,6 +102,28 @@ class Candidate
                 $applyValidation->setCandidate(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setCandidate(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user !== null && $user->getCandidate() !== $this) {
+            $user->setCandidate($this);
+        }
+
+        $this->user = $user;
 
         return $this;
     }
