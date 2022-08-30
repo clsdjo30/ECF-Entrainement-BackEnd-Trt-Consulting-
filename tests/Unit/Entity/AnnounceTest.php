@@ -85,6 +85,7 @@ class AnnounceTest extends TestCase
 
     public function testAddAndRemoveApplyAnnounceIsTrue(): void
     {
+
         $newApply = new ApplyValidation();
         $announce = (new Announce())
             ->addAppliedCandidate($newApply);
