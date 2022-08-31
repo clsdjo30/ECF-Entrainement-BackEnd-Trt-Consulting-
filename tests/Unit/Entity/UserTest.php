@@ -2,6 +2,7 @@
 
 namespace App\Tests\Unit\Entity;
 
+use App\Entity\Recruiter;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
@@ -9,6 +10,7 @@ class UserTest extends TestCase
 {
     public function testIsTrue(): void
     {
+
         $user = (new User())
             ->setEmail('true@email.com')
             ->setPassword('truepassword')
@@ -32,6 +34,16 @@ class UserTest extends TestCase
         $this->assertNotSame('false@email.com', $user->getEmail());
         $this->assertNotSame('falsepassword', $user->getPassword());
         $this->assertNotSame(['ROLE_USER'], $user->getRoles());
+
+    }
+
+    public function testRecruiterCreate(): void
+    {
+        $recruiter = new Recruiter();
+        $user = (new User())
+            ->setRecruiter($recruiter);
+
+        $this->assertTrue((bool)$user->getRecruiter());
 
     }
 }
