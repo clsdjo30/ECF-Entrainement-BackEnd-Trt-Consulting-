@@ -4,10 +4,10 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use DateTimeInterface;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -38,10 +38,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Candidate $candidate = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: 'datetime')]
     private ?DateTimeInterface $createdAt = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: 'datetime')]
     private ?DateTimeInterface $updatedAt = null;
 
     #[ORM\Column]
@@ -111,7 +111,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
@@ -158,28 +158,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeInterface
+    /**
+     * @return DateTimeInterface
+     */
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt): self
+    /**
+     * @param DateTimeInterface $createdAt
+     */
+    public function setCreatedAt(DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
 
-        return $this;
     }
 
+    /**
+     * @return DateTimeInterface|null
+     */
     public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    /**
+     * @param DateTimeInterface $updatedAt
+     */
+    public function setUpdatedAt(DateTimeInterface $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
 
-        return $this;
     }
 
     public function isIsValidated(): ?bool

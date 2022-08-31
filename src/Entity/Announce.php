@@ -8,8 +8,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Slug;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 #[ORM\Entity(repositoryClass: AnnounceRepository::class)]
+#[UniqueEntity(fields: ['slug'], message: 'announce.slug_unique', errorPath: 'title')]
 class Announce
 {
     #[ORM\Id]
@@ -36,15 +40,16 @@ class Announce
     private ?string $benefits = null;
 
     #[ORM\Column(length: 255)]
+    #[Slug(fields: ["title"])]
     private ?string $slug = null;
 
     #[ORM\Column]
     private ?bool $isValid = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: 'datetime')]
     private ?DateTimeInterface $createdAt = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: 'datetime')]
     private ?DateTimeInterface $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'announces')]

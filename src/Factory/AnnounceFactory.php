@@ -4,9 +4,9 @@ namespace App\Factory;
 
 use App\Entity\Announce;
 use App\Repository\AnnounceRepository;
-use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
+use Zenstruck\Foundry\RepositoryProxy;
 
 /**
  * @extends ModelFactory<Announce>
@@ -35,33 +35,50 @@ final class AnnounceFactory extends ModelFactory
         // TODO inject services if required (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services)
     }
 
+    protected static function getClass(): string
+    {
+        return Announce::class;
+    }
+
     protected function getDefaults(): array
     {
+        $experience = [
+            '1 ans souhaité',
+            '2 ans souhaité',
+            '5 ans souhaité',
+        ];
+        $beneficts = [
+            'Ticket restaurant',
+            'Logé',
+            'Nouri',
+            'Blanchi',
+            '13iem mois',
+            'Prime sur ratio',
+        ];
+        $hourly = [
+            'Horaire en coupure',
+            'Horaire continue journée',
+            'Horaire continue soirée',
+        ];
+
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'title' => self::faker()->text(),
+            'title' => self::faker()->sentence(5),
             'description' => self::faker()->text(),
-            'experience' => self::faker()->text(),
-            'salary' => self::faker()->randomNumber(),
-            'hourly' => self::faker()->text(),
-            'benefits' => self::faker()->text(),
-            'slug' => self::faker()->text(),
+            'experience' => self::faker()->randomElement($experience),
+            'salary' => self::faker()->numberBetween(1500, 5000),
+            'hourly' => self::faker()->randomElement($hourly),
+            'benefits' => self::faker()->randomElement($beneficts),
             'isValid' => self::faker()->boolean(),
-            'createdAt' => null, // TODO add DATETIME ORM type manually
-            'updatedAt' => null, // TODO add DATETIME ORM type manually
+            'createdAt' => self::faker()->dateTime(), // TODO add DATETIME ORM type manually
+            'updatedAt' => self::faker()->dateTime(), // TODO add DATETIME ORM type manually
         ];
     }
 
     protected function initialize(): self
     {
         // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-        return $this
-            // ->afterInstantiate(function(Announce $announce): void {})
-        ;
-    }
-
-    protected static function getClass(): string
-    {
-        return Announce::class;
+        return $this// ->afterInstantiate(function(Announce $announce): void {})
+            ;
     }
 }
