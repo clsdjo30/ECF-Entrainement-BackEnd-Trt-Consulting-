@@ -4,9 +4,9 @@ namespace App\Factory;
 
 use App\Entity\Company;
 use App\Repository\CompanyRepository;
-use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
+use Zenstruck\Foundry\RepositoryProxy;
 
 /**
  * @extends ModelFactory<Company>
@@ -35,23 +35,22 @@ final class CompanyFactory extends ModelFactory
         // TODO inject services if required (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services)
     }
 
+    protected static function getClass(): string
+    {
+        return Company::class;
+    }
+
     protected function getDefaults(): array
     {
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
+            'name' => self::faker()->company(),
         ];
     }
 
     protected function initialize(): self
     {
         // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-        return $this
-            // ->afterInstantiate(function(Company $company): void {})
-        ;
-    }
-
-    protected static function getClass(): string
-    {
-        return Company::class;
+        return $this// ->afterInstantiate(function(Company $company): void {})
+            ;
     }
 }
