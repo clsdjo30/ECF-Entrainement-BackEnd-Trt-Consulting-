@@ -5,6 +5,8 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use App\Factory\AddressFactory;
 use App\Factory\AnnounceFactory;
+use App\Factory\ApplyValidationFactory;
+use App\Factory\CandidateFactory;
 use App\Factory\CompanyFactory;
 use App\Factory\PublishValidationFactory;
 use App\Factory\RecruiterFactory;
@@ -39,10 +41,8 @@ class CategoriesAndAnnounceFixtures extends Fixture
 
         $manager->flush();
 
-        // Tableau de candidats et d'annonces
-        $candidats = [];
-        $announces = [];
-        $recruiters = [];
+        // Tableau d'annonces validées
+        $validAnnounces = [];
 
         // Création de 10 Recruteurs qui créent chacun 2 annonces
         for ($i = 0; $i < 30; $i++) {
@@ -72,12 +72,25 @@ class CategoriesAndAnnounceFixtures extends Fixture
                 ]
             );
 
-            PublishValidationFactory::createOne([
+            $validAnnounce = PublishValidationFactory::createOne([
                 'recruiter' => $recruiter,
                 'announce' => $announce,
             ]);
 
+            if ($validAnnounce->isAnnounceIsValid() === true) {
+                $validAnnounces[] = $validAnnounce;
+            }
 
+        }
+
+        foreach ($validAnnounces as $validAnnounce) {
+            $candidates = CandidateFactory::createMany(2);
+            foreach ($candidates as $candidate) {
+                ApplyValidationFactory::createOne([
+                    'candidate' => $candidate,
+                    'announce' => $validAnnounce->getAnnounce(),
+                ]);
+            }
         }
     }
 

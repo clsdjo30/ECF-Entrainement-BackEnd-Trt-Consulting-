@@ -4,9 +4,9 @@ namespace App\Factory;
 
 use App\Entity\Candidate;
 use App\Repository\CandidateRepository;
-use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
+use Zenstruck\Foundry\RepositoryProxy;
 
 /**
  * @extends ModelFactory<Candidate>
@@ -35,23 +35,24 @@ final class CandidateFactory extends ModelFactory
         // TODO inject services if required (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services)
     }
 
+    protected static function getClass(): string
+    {
+        return Candidate::class;
+    }
+
     protected function getDefaults(): array
     {
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
+            'firstname' => self::faker()->firstName(),
+            'lastname' => self::faker()->lastName(),
+            'cvFile' => self::faker()->sentence(6),
         ];
     }
 
     protected function initialize(): self
     {
         // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-        return $this
-            // ->afterInstantiate(function(Candidate $candidate): void {})
-        ;
-    }
-
-    protected static function getClass(): string
-    {
-        return Candidate::class;
+        return $this// ->afterInstantiate(function(Candidate $candidate): void {})
+            ;
     }
 }
