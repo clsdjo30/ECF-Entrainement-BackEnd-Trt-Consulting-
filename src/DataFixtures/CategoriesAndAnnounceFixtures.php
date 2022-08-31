@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Factory\AddressFactory;
 use App\Factory\AnnounceFactory;
 use App\Factory\CompanyFactory;
+use App\Factory\PublishValidationFactory;
 use App\Factory\RecruiterFactory;
 use App\Factory\UserFactory;
 use DateTime;
@@ -17,6 +18,7 @@ use Exception;
 class CategoriesAndAnnounceFixtures extends Fixture
 {
     private int $counter = 1;
+
 
     /**
      * @throws Exception
@@ -37,8 +39,13 @@ class CategoriesAndAnnounceFixtures extends Fixture
 
         $manager->flush();
 
+        // Tableau de candidats et d'annonces
+        $candidats = [];
+        $announces = [];
+        $recruiters = [];
+
         // Création de 10 Recruteurs qui créent chacun 2 annonces
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             //1 user avec le role recruiter
             $user = UserFactory::createOne([
                 'roles' => ['ROLE_RECRUITER'],
@@ -56,17 +63,20 @@ class CategoriesAndAnnounceFixtures extends Fixture
                 'address_id' => AddressFactory::createOne(),
             ]);
 
-            for ($k = 0; $k < 2; $k++) {
 
-                $category = $this->getReference('cat-'.random_int(1, 8));
-                AnnounceFactory::createOne(
-                    [
-                        'recruiter' => $recruiter,
-                        'category' => $category,
+            $category = $this->getReference('cat-'.random_int(1, 8));
+            $announce = AnnounceFactory::createOne(
+                [
+                    'recruiter' => $recruiter,
+                    'category' => $category,
+                ]
+            );
 
-                    ]
-                );
-            }
+            PublishValidationFactory::createOne([
+                'recruiter' => $recruiter,
+                'announce' => $announce,
+            ]);
+
 
         }
     }

@@ -4,9 +4,9 @@ namespace App\Factory;
 
 use App\Entity\PublishValidation;
 use App\Repository\PublishValidationRepository;
-use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
+use Zenstruck\Foundry\RepositoryProxy;
 
 /**
  * @extends ModelFactory<PublishValidation>
@@ -35,24 +35,23 @@ final class PublishValidationFactory extends ModelFactory
         // TODO inject services if required (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services)
     }
 
+    protected static function getClass(): string
+    {
+        return PublishValidation::class;
+    }
+
     protected function getDefaults(): array
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'announceIsValid' => self::faker()->boolean(),
+            'announceIsValid' => self::faker()->boolean(70),
         ];
     }
 
     protected function initialize(): self
     {
         // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-        return $this
-            // ->afterInstantiate(function(PublishValidation $publishValidation): void {})
-        ;
-    }
-
-    protected static function getClass(): string
-    {
-        return PublishValidation::class;
+        return $this// ->afterInstantiate(function(PublishValidation $publishValidation): void {})
+            ;
     }
 }
