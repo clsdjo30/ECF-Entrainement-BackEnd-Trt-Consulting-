@@ -29,14 +29,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\OneToOne(mappedBy: 'user_id', cascade: ['persist', 'remove'])]
-    private ?Recruiter $recruiter = null;
-
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Consultant $consultant = null;
 
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Candidate $candidate = null;
+
+    #[ORM\OneToOne(inversedBy: 'user_id', cascade: ['persist', 'remove'])]
+    private ?Recruiter $recruiter = null;
 
     #[ORM\Column(type: 'datetime')]
     private ?DateTimeInterface $createdAt = null;
@@ -46,6 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?bool $isValidated = null;
+
 
     public function getId(): ?int
     {
@@ -117,23 +118,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getRecruiter(): ?Recruiter
-    {
-        return $this->recruiter;
-    }
-
-    public function setRecruiter(Recruiter $recruiter): self
-    {
-        // set the owning side of the relation if necessary
-        if ($recruiter->getUserId() !== $this) {
-            $recruiter->setUserId($this);
-        }
-
-        $this->recruiter = $recruiter;
-
-        return $this;
-    }
-
     public function getConsultant(): ?Consultant
     {
         return $this->consultant;
@@ -200,6 +184,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsValidated(bool $isValidated): self
     {
         $this->isValidated = $isValidated;
+
+        return $this;
+    }
+
+    public function getRecruiter(): ?Recruiter
+    {
+        return $this->recruiter;
+    }
+
+    public function setRecruiter(?Recruiter $recruiter): self
+    {
+        $this->recruiter = $recruiter;
 
         return $this;
     }

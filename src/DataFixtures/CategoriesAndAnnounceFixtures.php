@@ -3,7 +3,9 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
+use App\Factory\AddressFactory;
 use App\Factory\AnnounceFactory;
+use App\Factory\CompanyFactory;
 use App\Factory\RecruiterFactory;
 use App\Factory\UserFactory;
 use DateTime;
@@ -46,7 +48,12 @@ class CategoriesAndAnnounceFixtures extends Fixture
             ]);
 
             $recruiter = RecruiterFactory::createOne([
-                'userid' => $user,
+                'user_id' => $user,
+
+            ]);
+            CompanyFactory::createOne([
+                'recruiter' => $recruiter,
+                'address_id' => AddressFactory::createOne(),
             ]);
 
             for ($k = 0; $k < 2; $k++) {

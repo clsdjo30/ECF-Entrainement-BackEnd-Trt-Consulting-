@@ -18,15 +18,14 @@ class Recruiter
     #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: Company::class, orphanRemoval: true)]
     private Collection $company_id;
 
-    #[ORM\OneToOne(inversedBy: 'recruiter', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user_id = null;
-
     #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: Announce::class, orphanRemoval: true)]
     private Collection $announce_id;
 
     #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: PublishValidation::class, orphanRemoval: true)]
     private Collection $publishValidations;
+
+    #[ORM\OneToOne(mappedBy: 'recruiter', cascade: ['persist', 'remove'])]
+    private ?User $user_id = null;
 
     public function __construct()
     {
@@ -66,18 +65,6 @@ class Recruiter
                 $companyId->setRecruiter(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getUserId(): ?User
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(User $user_id): self
-    {
-        $this->user_id = $user_id;
 
         return $this;
     }
@@ -138,6 +125,28 @@ class Recruiter
                 $publishValidation->setRecruiter(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?User $user_id): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($user_id === null && $this->user_id !== null) {
+            $this->user_id->setRecruiter(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user_id !== null && $user_id->getRecruiter() !== $this) {
+            $user_id->setRecruiter($this);
+        }
+
+        $this->user_id = $user_id;
 
         return $this;
     }
