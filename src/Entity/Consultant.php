@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ConsultantRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ConsultantRepository::class)]
 class Consultant
@@ -14,9 +15,19 @@ class Consultant
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        max: 25,
+        maxMessage: 'Votre prénom est trop long'
+    )]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        max: 25,
+        maxMessage: 'Votre nom est trop long'
+    )]
     private ?string $lastname = null;
 
     #[ORM\OneToOne(mappedBy: 'consultant', cascade: ['persist', 'remove'])]
