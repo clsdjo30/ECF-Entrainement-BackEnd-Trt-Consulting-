@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Candidate;
+use App\Entity\Recruiter;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
@@ -25,8 +27,8 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-    #[Route('/register', name: 'app_register')]
-    public function register(
+    #[Route('/register/candidate', name: 'app_register_candidate')]
+    public function registerCandidate(
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManager
@@ -43,10 +45,15 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             )
+                ->setRoles(["ROLE_CANDIDATE"])
                 ->setIsValidated(false)
                 ->setIsVerified(false);
 
+            $candidate = (new Candidate())
+                ->setUser($user);
+
             $entityManager->persist($user);
+            $entityManager->persist($candidate);
             $entityManager->flush();
 
             // generate a signed url and email it to the user
@@ -61,7 +68,56 @@ class RegistrationController extends AbstractController
             );
 
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home_verification');
+        }
+
+        return $this->render('registration/register.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/register/recruiter', name: 'app_register_recruiter')]
+    public function registerRecruiter(
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $user = new User();
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            )
+                ->setRoles(["ROLE_RECRUITER"])
+                ->setIsValidated(false)
+                ->setIsVerified(false);
+
+            $recruiter = (new Recruiter())
+                ->setUserId($user);
+
+            $entityManager->persist($user);
+            $entityManager->persist($recruiter);
+            $entityManager->flush();
+
+            // generate a signed url and email it to the user
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
+                (new TemplatedEmail())
+                    ->from(new Address('contact@c-and-com.studio', 'Trt Consulting'))
+                    ->to('to@example.com')
+                    ->subject('Merci de confirmer votre adresse email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+
+
+            return $this->redirectToRoute('app_home_verification');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -80,12 +136,12 @@ class RegistrationController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('app_home');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('app_home_connexion');
     }
 }
