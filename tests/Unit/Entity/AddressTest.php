@@ -4,9 +4,11 @@ namespace App\Tests\Unit\Entity;
 
 use App\Entity\Address;
 use App\Entity\Company;
-use PHPUnit\Framework\TestCase;
+use Exception;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Validator\ConstraintViolation;
 
-class AddressTest extends TestCase
+class AddressTest extends KernelTestCase
 {
     public function testAddressIsTrue(): void
     {
@@ -62,5 +64,105 @@ class AddressTest extends TestCase
         $this->assertEmpty($address->getCity());
         $this->assertEmpty($address->getCountry());
         $this->assertEmpty($address->getCompany());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testInvalidStreetNumber(): void
+    {
+        $address = new Address();
+
+        $this->assertHasErrors($this->getEntity()->setStreetNumber(-10), 1);
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function assertHasErrors(Address $address, int $number = 0): void
+    {
+        self::bootKernel();
+        $errors = self::getContainer()->get('validator')->validate($address);
+        $messages = [];
+        /** @var ConstraintViolation $error */
+        foreach ($errors as $error) {
+            $messages[] = $error->getPropertyPath().' => '.$error->getMessage();
+        }
+        $this->assertCount($number, $errors, implode(', ', $messages));
+    }
+
+    public function getEntity(): Address
+    {
+        return (new Address())
+            ->setStreetNumber(10)
+            ->setStreetType('rue')
+            ->setStreetName('du test')
+            ->setZipCode(34000)
+            ->setCity('Montpellier')
+            ->setCountry('France');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testInvalidStreetName(): void
+    {
+        $address = new Address();
+
+        $this->assertHasErrors($this->getEntity()->setStreetName('de'), 1);
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testInvalidZipCode(): void
+    {
+
+        $this->assertHasErrors($this->getEntity()->setZipCode(3400), 1);
+        $this->assertHasErrors($this->getEntity()->setZipCode(-34000), 1);
+
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testBlankZipCode(): void
+    {
+
+        $this->assertHasErrors($this->getEntity()->setZipCode(0), 1);
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testInvalidBlankCountry(): void
+    {
+
+        $this->assertHasErrors($this->getEntity()->setCountry(''), 1);
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testInvalidBlankCity(): void
+    {
+
+        $this->assertHasErrors($this->getEntity()->setCity(''), 1);
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testInvalidBlankStreetType(): void
+    {
+
+        $this->assertHasErrors($this->getEntity()->setStreetType(''), 1);
+
     }
 }
