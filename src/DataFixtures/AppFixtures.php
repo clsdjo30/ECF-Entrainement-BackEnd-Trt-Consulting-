@@ -29,6 +29,7 @@ class AppFixtures extends Fixture
             'createdAt' => new DateTime(),
             'updatedAt' => new DateTime(),
             'isValidated' => true,
+            'isVerified' => true,
         ]);
         ConsultantFactory::createOne([
             'user' => $consultant,
@@ -39,6 +40,7 @@ class AppFixtures extends Fixture
             'createdAt' => new DateTime(),
             'updatedAt' => new DateTime(),
             'isValidated' => true,
+            'isVerified' => true,
         ]);
         CandidateFactory::createOne([
             'user' => $candidate,
@@ -52,6 +54,7 @@ class AppFixtures extends Fixture
             'createdAt' => new DateTime(),
             'updatedAt' => new DateTime(),
             'isValidated' => true,
+            'isVerified' => true,
         ]);
         RecruiterFactory::createOne([
             'user_id' => $recruiter,
@@ -65,6 +68,7 @@ class AppFixtures extends Fixture
                 'createdAt' => new DateTime(),
                 'updatedAt' => new DateTime(),
                 'isValidated' => true,
+                'isVerified' => true,
 
             ]);
             ConsultantFactory::createOne([
