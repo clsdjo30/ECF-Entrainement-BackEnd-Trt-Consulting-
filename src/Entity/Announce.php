@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Slug;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: AnnounceRepository::class)]
@@ -22,25 +23,32 @@ class Announce
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $experience = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
     private ?int $salary = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $hourly = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $benefits = null;
 
     #[ORM\Column(length: 255)]
     #[Slug(fields: ["title"])]
+    #[Assert\NotBlank]
     private ?string $slug = null;
 
     #[ORM\Column]
