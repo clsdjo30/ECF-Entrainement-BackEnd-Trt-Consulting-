@@ -18,6 +18,7 @@ class AppFixtures extends Fixture
         UserFactory::createOne([
             'email' => 'admin@trt-consulting.com',
             'roles' => ['ROLE_ADMIN'],
+            'password' => 'password',
             'createdAt' => new DateTime(),
             'updatedAt' => new DateTime(),
             'isValidated' => true,
@@ -26,6 +27,7 @@ class AppFixtures extends Fixture
         $consultant = UserFactory::createOne([
             'email' => 'consultant@trt-consulting.com',
             'roles' => ['ROLE_CONSULTANT'],
+            'password' => 'password',
             'createdAt' => new DateTime(),
             'updatedAt' => new DateTime(),
             'isValidated' => true,
@@ -37,6 +39,7 @@ class AppFixtures extends Fixture
         $candidate = UserFactory::createOne([
             'email' => 'candidat@trt-consulting.com',
             'roles' => ['ROLE_CANDIDATE'],
+            'password' => 'password',
             'createdAt' => new DateTime(),
             'updatedAt' => new DateTime(),
             'isValidated' => true,
@@ -51,6 +54,7 @@ class AppFixtures extends Fixture
         $recruiter = UserFactory::createOne([
             'email' => 'recruiter@trt-consulting.com',
             'roles' => ['ROLE_RECRUITER'],
+            'password' => 'password',
             'createdAt' => new DateTime(),
             'updatedAt' => new DateTime(),
             'isValidated' => true,
