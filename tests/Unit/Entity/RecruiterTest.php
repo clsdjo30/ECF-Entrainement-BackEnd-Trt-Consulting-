@@ -6,6 +6,7 @@ use App\Entity\Announce;
 use App\Entity\Company;
 use App\Entity\PublishValidation;
 use App\Entity\Recruiter;
+use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
 class RecruiterTest extends TestCase
@@ -13,6 +14,8 @@ class RecruiterTest extends TestCase
     public function testAddAndRemoveCompanyIsTrue(): void
     {
         $company = new Company();
+
+        $user = new User();
 
         $recruiter = (new Recruiter())
             ->addCompanyId($company);
@@ -22,6 +25,10 @@ class RecruiterTest extends TestCase
         $recruiter->removeCompanyId($company);
 
         $this->assertEmpty($recruiter->getCompanyId());
+
+        $recruiter->setUserId($user);
+
+        $this->assertSame($recruiter->getUserId(), $user);
     }
 
     public function testAddAndRemoveAnnounceIsTrue(): void

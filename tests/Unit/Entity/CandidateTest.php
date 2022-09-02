@@ -4,19 +4,23 @@ namespace App\Tests\Unit\Entity;
 
 use App\Entity\ApplyValidation;
 use App\Entity\Candidate;
+use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
 class CandidateTest extends TestCase
 {
     public function testCandidateIsTrue(): void
     {
+        $user = new User();
         $candidate = (new Candidate())
             ->setFirstname('prenom')
             ->setLastname('nom de famille')
-            ->setCvFile('Mon Super CV');
+            ->setCvFile('Mon Super CV')
+            ->setUser($user);
         $this->assertTrue((bool)$candidate->getCvFile('Mon Super CV'));
         $this->assertTrue((bool)$candidate->getFirstname('prenom'));
         $this->assertTrue((bool)$candidate->getLastname('nom de famille'));
+        $this->assertTrue((bool)$candidate->getUser());
 
     }
 
