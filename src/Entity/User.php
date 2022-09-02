@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Timestampable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -41,16 +42,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Recruiter $recruiter = null;
 
     #[ORM\Column(type: 'datetime')]
+    #[Timestampable(on: 'create')]
     private ?DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: 'datetime')]
+    #[Timestampable(on: "update")]
     private ?DateTimeInterface $updatedAt = null;
 
     #[ORM\Column]
     private ?bool $isValidated = null;
 
     #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
+    private bool $isVerified = false;
 
 
     public function getId(): ?int
