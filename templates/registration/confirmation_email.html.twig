@@ -1,0 +1,46 @@
+{% apply inky_to_html|inline_css(source('@styles/foundation-emails.css'), source('@styles/email.css')) %}
+    <container>
+        <row class="header">
+            <columns>
+                <h1 class="text-center">
+                    Trt Consulting
+                </h1>
+            </columns>
+        </row>
+        <row>
+            <columns>
+                <spacer size="30"></spacer>
+                <h2 class="text-center">
+                    Encore un petit effort !
+                </h2>
+                <spacer size="10"></spacer>
+            </columns>
+        </row>
+        <spacer size="30"></spacer>
+        <row>
+            <columns>
+                <p>
+                    Veuillez vérifier votre adresse email afin que notre équipe de consultants puisse valider votre
+                    compte
+                </p>
+            </columns>
+        </row>
+        <row>
+            <columns>
+                <center>
+                    <button href="{{ signedUrl }} class=rounded">Confirmer mon Email</button>
+                </center>
+            </columns>
+        </row>
+
+        <row class="footer">
+            <columns>
+
+                <p class="text-right">Le lien est valide
+                    : {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}</p>
+
+            </columns>
+        </row>
+
+    </container>
+{% endapply %}
