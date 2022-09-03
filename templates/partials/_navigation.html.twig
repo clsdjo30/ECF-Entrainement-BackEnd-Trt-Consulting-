@@ -11,10 +11,52 @@
                 <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">a Propos</a></li>
             </ul>
-            <div class="col-md-4 text-end">
-                <a href="{{ path('app_login') }}" class="btn btn-outline-primary me-2 text-capitalize">
-                    se connecter
-                </a>
+            <div class="col-md-2  d-flex justify-content-around align-items-center text-end btn-group">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="btn btn primary btn-outline-warning me-2">Vous êtes connecté en tant que :
+                        {% for role in app.user.roles %}
+                            {% if role == 'ROLE_ADMIN' %}
+                                Administrateur
+                            {% endif %}
+                        {% endfor %}
+                    </a>
+                    <a class="btn btn primary btn-outline-primary me-2" href="{# route admin #}">Mon Compte</a>
+                    <a class="btn btn primary btn-outline-primary me-2" href="{{ path('app_logout') }}">Déconnexion</a>
+                {% elseif is_granted('ROLE_CONSULTANT') %}
+                    <a class="btn btn primary btn-outline-warning me-2">Vous êtes connecté en tant que :
+                        {% for role in app.user.roles %}
+                            {% if role == 'ROLE_CONSULTANT' %}
+                                Consultant
+                            {% endif %}
+                        {% endfor %}
+                    </a>
+                    <a class="btn btn primary btn-outline-primary me-2" href="{# route admin #}">Mon Compte</a>
+                    <a class="btn btn primary btn-outline-primary me-2" href="{{ path('app_logout') }}">Déconnexion</a>
+                {% elseif is_granted('ROLE_RECRUITER') %}
+                    <a class="btn btn primary btn-outline-warning me-2">Vous êtes connecté en tant que :
+                        {% for role in app.user.roles %}
+                            {% if role == 'ROLE_RECRUITER' %}
+                                Consultant
+                            {% endif %}
+                        {% endfor %}
+                    </a>
+                    <a class="btn btn primary btn-outline-primary me-2" href="{# route recruiter #}">Mon Compte</a>
+                    <a class="btn btn primary btn-outline-primary me-2" href="{{ path('app_logout') }}">Déconnexion</a>
+
+                {% elseif is_granted('ROLE_CANDIDATE') %}
+                    <a class="btn btn primary btn-outline-warning me-2">Vous êtes connecté en tant que :
+                        {% for role in app.user.roles %}
+                            {% if role == 'ROLE_CANDIDATE' %}
+                                Candidat
+                            {% endif %}
+                        {% endfor %}
+                    </a>
+                    <a class="btn btn primary btn-outline-primary me-2" href="{# route candidate #}">Mon Compte</a>
+                    <a class="btn btn primary btn-outline-primary me-2" href="{{ path('app_logout') }}">Déconnexion</a>
+                {% else %}
+                    <a class="btn btn primary btn-outline-primary me-2" href="{{ path('app_login') }}">Login</a>
+                {% endif %}
+
 
             </div>
 
