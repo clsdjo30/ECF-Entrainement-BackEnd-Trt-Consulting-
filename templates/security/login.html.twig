@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page de Connexion{% endblock %}
+
+{% block content %}
+    <div class="container-fluid banner d-flex justify-content-center align-items-center flex-column">
+        <div class="row w-75 d-flex justify-content-center align-items-center flex-column">
+            <div class="col-md-6">
+
+                <h1 class="text-center text-capitalize text-black font-monospace mb-5">
+                    Connexion
+                </h1>
+
+
+                <form method="post">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    {% if app.user %}
+                        <div class="mb-3 font-monospace">
+                            You are logged in as {{ app.user.userIdentifier }}, <a
+                                    href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                    {% endif %}
+
+
+                    <label for="inputEmail" class="mb-2 font-monospace">Email</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
+                           class="form-control mb-4"
+                           autocomplete="email" required autofocus>
+                    <label for="inputPassword" class="mb-2 font-monospace">Password</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control"
+                           autocomplete="current-password"
+                           required>
+
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+
+                    <div class="checkbox mb-3">
+                        <label class="mt-4 font-monospace">
+                            <input type="checkbox" name="_remember_me"> se souvenir de moi
+                        </label>
+                    </div>
+
+
+                    <button class="col-12 btn btn-lg btn-outline-primary mt-5 text-capitalize" type="submit">
+                        se connecter
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
