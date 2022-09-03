@@ -1,0 +1,42 @@
+{% apply inky_to_html|inline_css(source('@styles/foundation-emails.css'), source('@styles/email.css')) %}
+    <container>
+        <row class="header">
+            <columns>
+                <h1 class="text-center">
+                    Trt Consulting
+                </h1>
+            </columns>
+        </row>
+        <row>
+            <columns>
+                <spacer size="30"></spacer>
+                <h2 class="text-center">
+                    Bravo, votre annonce est en ligne !
+                </h2>
+                <spacer size="10"></spacer>
+            </columns>
+        </row>
+        <spacer size="30"></spacer>
+        <row>
+            <columns>
+                <p>
+                    Si vous recherchez plusieurs profil vous pouvez déposer une nouvelle annonce.
+                </p>
+            </columns>
+        </row>
+        <row>
+            <columns class="text-align-center">
+
+                <button href="{{ path('app_announce') }} class=rounded">Publier une nouvelle annonce</button>
+
+            </columns>
+        </row>
+
+        <row class="footer">
+            <columns>
+                <p>Notre équipe de consultants spécialisés <em>Hôtellerie/Restauration</em> est à votre écoute</p>
+            </columns>
+        </row>
+
+    </container>
+{% endapply %}

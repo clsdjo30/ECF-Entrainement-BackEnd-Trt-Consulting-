@@ -1,0 +1,38 @@
+{% apply inky_to_html|inline_css(source('@styles/foundation-emails.css'), source('@styles/email.css')) %}
+    <container>
+        <row class="header">
+            <columns>
+                <h1 class="text-center">
+                    Trt Consulting
+                </h1>
+            </columns>
+        </row>
+        <row>
+            <columns>
+                <spacer size="30"></spacer>
+                <h2 class="text-center">
+                    Nous venons de valider une candidature !
+                </h2>
+                <spacer size="10"></spacer>
+            </columns>
+        </row>
+        <spacer size="30"></spacer>
+        <row>
+            <columns>
+                <p>
+                    Nous avons validé la candidature de {{ candidate.fulName }}. Son profil semble correspondre à votre
+                    recherche.
+                </p>
+                <p>
+                    Vous pouvez consulter son Cv ci-joint.
+                </p>
+            </columns>
+        </row>
+        <row class="footer">
+            <columns>
+                <p>Notre équipe de consultants spécialisés <em>Hôtellerie/Restauration</em> est à votre écoute</p>
+            </columns>
+        </row>
+
+    </container>
+{% endapply %}

@@ -1,0 +1,54 @@
+{% apply inky_to_html|inline_css(source('@styles/foundation-emails.css'), source('@styles/email.css')) %}
+    <container>
+        <row class="header">
+            <columns>
+                <h1 class="text-center">
+                    Trt Consulting
+                </h1>
+            </columns>
+        </row>
+        <row>
+            <columns>
+                <spacer size="30"></spacer>
+                <h2 class="text-center">
+                    Félicitation, votre compte est activé !
+                </h2>
+                <spacer size="10"></spacer>
+            </columns>
+        </row>
+        <spacer size="30"></spacer>
+        <row>
+            <columns>
+                <p>
+                    Vous pouvez dès à présent vous rendre sur votre espace membre afin de completer votre fiche
+                    entreprise !
+                </p>
+            </columns>
+        </row>
+        <row>
+            <columns class="text-align-center">
+
+                <button href="{{ path('app_login') }} class=rounded">Completer mon Profil</button>
+
+            </columns>
+        </row>
+        <row>
+            <columns>
+                <p class="text-align-center">
+                    Vous pourrez alors rédiger votre première annonce !
+                </p>
+                <p class="text-align-center">
+                    Une fois votre annonce certifiée par notre équipe, vous recevrez les candidatures par email.
+                </p>
+            </columns>
+        </row>
+
+
+        <row class="footer">
+            <columns>
+                <p>Notre équipe de consultants spécialisés <em>Hôtellerie/Restauration</em> est à votre écoute</p>
+            </columns>
+        </row>
+
+    </container>
+{% endapply %}
