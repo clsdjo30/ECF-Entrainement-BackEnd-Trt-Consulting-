@@ -52,6 +52,7 @@ class CategoriesAndAnnounceFixtures extends Fixture
                 'createdAt' => new DateTime(),
                 'updatedAt' => new DateTime(),
                 'isValidated' => true,
+                'isVerified' => true,
             ]);
 
             $recruiter = RecruiterFactory::createOne([
