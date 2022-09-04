@@ -1,5 +1,9 @@
 <div class="banner ">
-
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-error">
+            {{ message }}
+        </div>
+    {% endfor %}
 
     <div class="banner container ">
         <h1 class="text-center text-uppercase py-5 ">pour vous servir</h1>
@@ -7,7 +11,7 @@
             <div class="card p-2 shadow-lg shadow-white mb-5 mb-md-0">
                 <img src="{{ asset('build/images/candidat.jpg') }}" class="card-img-top" alt="...">
                 <div class="card-body text-center">
-                    <a href="{{ path('app_register') }}"
+                    <a href="{{ path('app_register_candidate') }}"
                        class="btn btn-outline-primary text-uppercase fs-3 text-black px-5">
                         postuler
                     </a>
@@ -16,7 +20,7 @@
             <div class="card p-2 shadow-lg ">
                 <img src="{{ asset('build/images/recruteur.jpg') }}" class="card-img-top" alt="...">
                 <div class="card-body text-center">
-                    <a href="{{ path('app_register') }}"
+                    <a href="{{ path('app_register_recruiter') }}"
                        class="btn btn-outline-primary text-uppercase fs-3 text-black px-5">
                         recruter
                     </a>

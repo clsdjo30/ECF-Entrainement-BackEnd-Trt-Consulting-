@@ -11,7 +11,7 @@
             <columns>
                 <spacer size="30"></spacer>
                 <h2 class="text-center">
-                    Encore un petit effort !
+                    Nous venons de valider une candidature !
                 </h2>
                 <spacer size="10"></spacer>
             </columns>
@@ -20,27 +20,17 @@
         <row>
             <columns>
                 <p>
-                    Veuillez vérifier votre adresse email afin que notre équipe de consultants puisse valider votre
-                    compte
+                    Nous avons validé la candidature de {{ candidate.fulName }}. Son profil semble correspondre à votre
+                    recherche.
+                </p>
+                <p>
+                    Vous pouvez consulter son Cv ci-joint.
                 </p>
             </columns>
         </row>
-        <row>
-            <columns>
-                <p class="text-center">
-                    <button href="{{ signedUrl }}">Confirmer mon Email</button>
-                    .
-                </p>
-            </columns>
-        </row>
-
         <row class="footer">
             <columns>
-
-                <p class="text-right">Le lien est valide
-                    : {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}</p>
-
-
+                <p>Notre équipe de consultants spécialisés <em>Hôtellerie/Restauration</em> est à votre écoute</p>
             </columns>
         </row>
 

@@ -20,9 +20,9 @@ class HomeController extends AbstractController
         return $this->render('home/email_verification.html.twig');
     }
 
-    #[Route('/connexion', name: 'app_home_connexion')]
+    #[Route('/first-connexion', name: 'app_home_first_connexion')]
     public function pendingValidation(): Response
     {
-        return $this->render('home/connexion_page.html.twig');
+        return $this->render('home/pending_validation.html.twig');
     }
 }

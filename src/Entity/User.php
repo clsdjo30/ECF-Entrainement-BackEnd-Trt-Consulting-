@@ -49,8 +49,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Timestampable(on: "update")]
     private ?DateTimeInterface $updatedAt = null;
 
-    #[ORM\Column]
-    private ?bool $isValidated = null;
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $isValidated = false;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;

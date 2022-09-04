@@ -46,8 +46,7 @@ class RegistrationController extends AbstractController
                 )
             )
                 ->setRoles(["ROLE_CANDIDATE"])
-                ->setIsValidated(false)
-                ->setIsVerified(false);
+                ->setIsValidated(false);
 
             $candidate = (new Candidate())
                 ->setUser($user);
@@ -62,7 +61,7 @@ class RegistrationController extends AbstractController
                 $user,
                 (new TemplatedEmail())
                     ->from(new Address('contact@c-and-com.studio', 'Trt Consulting'))
-                    ->to('to@example.com')
+                    ->to($user->getEmail())
                     ->subject('Merci de confirmer votre adresse email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
@@ -95,8 +94,7 @@ class RegistrationController extends AbstractController
                 )
             )
                 ->setRoles(["ROLE_RECRUITER"])
-                ->setIsValidated(false)
-                ->setIsVerified(false);
+                ->setIsValidated(false);
 
             $recruiter = (new Recruiter())
                 ->setUserId($user);
@@ -111,7 +109,7 @@ class RegistrationController extends AbstractController
                 $user,
                 (new TemplatedEmail())
                     ->from(new Address('contact@c-and-com.studio', 'Trt Consulting'))
-                    ->to('to@example.com')
+                    ->to($user->getEmail())
                     ->subject('Merci de confirmer votre adresse email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
@@ -136,12 +134,12 @@ class RegistrationController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home_verification');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_home_connexion');
+        $this->addFlash('success', 'Félicitation votre adresse mail est valide et vérifiée ! ');
+
+        return $this->redirectToRoute('app_home_first_connexion');
     }
 }

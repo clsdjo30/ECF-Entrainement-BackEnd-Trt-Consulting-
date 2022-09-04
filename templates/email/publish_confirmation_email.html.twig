@@ -11,7 +11,7 @@
             <columns>
                 <spacer size="30"></spacer>
                 <h2 class="text-center">
-                    Encore un petit effort !
+                    Bravo, votre annonce est en ligne !
                 </h2>
                 <spacer size="10"></spacer>
             </columns>
@@ -20,27 +20,21 @@
         <row>
             <columns>
                 <p>
-                    Veuillez vérifier votre adresse email afin que notre équipe de consultants puisse valider votre
-                    compte
+                    Si vous recherchez plusieurs profil vous pouvez déposer une nouvelle annonce.
                 </p>
             </columns>
         </row>
         <row>
             <columns>
-                <p class="text-center">
-                    <button href="{{ signedUrl }}">Confirmer mon Email</button>
-                    .
-                </p>
+                <center>
+                    <button href="{{ path('app_announce') }} class=rounded">Publier une nouvelle annonce</button>
+                </center>
             </columns>
         </row>
 
         <row class="footer">
             <columns>
-
-                <p class="text-right">Le lien est valide
-                    : {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}</p>
-
-
+                <p>Notre équipe de consultants spécialisés <em>Hôtellerie/Restauration</em> est à votre écoute</p>
             </columns>
         </row>
 

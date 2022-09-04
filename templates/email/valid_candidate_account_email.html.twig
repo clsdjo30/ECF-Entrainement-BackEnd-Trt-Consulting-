@@ -11,7 +11,7 @@
             <columns>
                 <spacer size="30"></spacer>
                 <h2 class="text-center">
-                    Encore un petit effort !
+                    Félicitation, votre compte est activé !
                 </h2>
                 <spacer size="10"></spacer>
             </columns>
@@ -20,27 +20,31 @@
         <row>
             <columns>
                 <p>
-                    Veuillez vérifier votre adresse email afin que notre équipe de consultants puisse valider votre
-                    compte
+                    Vous pouvez dès à présent vous rendre sur votre espace membre afin de compléter votre profil et y
+                    ajouter votre CV.
                 </p>
             </columns>
         </row>
         <row>
             <columns>
-                <p class="text-center">
-                    <button href="{{ signedUrl }}">Confirmer mon Email</button>
-                    .
+                <center>
+                    <button href="{{ path('app_login') }} class=rounded">Je complète mon profil</button>
+                </center>
+            </columns>
+        </row>
+        <row>
+            <columns>
+                <p>
+                    Vous pourrez consulter toutes nos offres d'emploi et y postuler afin de trouver votre futur job de
+                    rêve !
                 </p>
             </columns>
         </row>
 
+
         <row class="footer">
             <columns>
-
-                <p class="text-right">Le lien est valide
-                    : {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}</p>
-
-
+                <p>Notre équipe de consultants spécialisés <em>Hôtellerie/Restauration</em> est à votre écoute</p>
             </columns>
         </row>
 
