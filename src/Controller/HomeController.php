@@ -11,12 +11,15 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
+
+
         return $this->render('home/index.html.twig');
     }
 
     #[Route('/verification', name: 'app_home_verification')]
     public function notVerified(): Response
     {
+
         return $this->render('home/email_verification.html.twig');
     }
 
