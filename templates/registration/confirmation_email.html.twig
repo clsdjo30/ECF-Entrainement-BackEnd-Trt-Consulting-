@@ -27,9 +27,10 @@
         </row>
         <row>
             <columns>
-                <center>
-                    <button href="{{ signedUrl }} class=rounded">Confirmer mon Email</button>
-                </center>
+                <p class="text-center">
+                    <button href="{{ signedUrl }}">Confirmer mon Email</button>
+                    .
+                </p>
             </columns>
         </row>
 
@@ -38,6 +39,7 @@
 
                 <p class="text-right">Le lien est valide
                     : {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}</p>
+
 
             </columns>
         </row>

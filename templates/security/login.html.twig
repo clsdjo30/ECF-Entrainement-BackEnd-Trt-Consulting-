@@ -10,8 +10,6 @@
                 <h1 class="text-center text-capitalize text-black font-monospace mb-5">
                     Connexion
                 </h1>
-
-
                 <form method="post">
                     {% if error %}
                         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
