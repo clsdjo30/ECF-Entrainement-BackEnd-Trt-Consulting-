@@ -11,7 +11,7 @@
                 <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">a Propos</a></li>
             </ul>
-            <div class="col-md-8  d-flex justify-content-around align-items-center text-end btn-group">
+            <div class="col-md-4  d-flex justify-content-around align-items-center text-end btn-group">
                 {% if is_granted('ROLE_ADMIN') %}
                     <a class="btn btn primary btn-outline-warning me-2">Vous êtes connecté en tant que :
                         {% for role in app.user.roles %}
@@ -44,27 +44,49 @@
                     <a class="btn btn primary btn-outline-primary me-2" href="{{ path('app_logout') }}">Déconnexion</a>
 
                 {% elseif is_granted('ROLE_CANDIDATE') %}
-
-                    <li class="nav-item dropdown btn btn-outline-info  me-2">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                           aria-expanded="false">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                             {% for role in app.user.roles %}
                                 {% if role == 'ROLE_CANDIDATE' %}
-                                    Candidat
+                                    Vous êtes connecté en tant que Candidat
                                 {% endif %}
                             {% endfor %}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <button class="dropdown-item" type="button">Mes Informations</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button"></button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">Mes Announces</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">
+                                    <a href="{{ path('app_home') }}">
+                                        Voir les announces
+                                    </a>
+                                </button>
+                            </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
+                            <li>
+                                <button class="dropdown-item" type="button">
+                                    {{ app.user.email }}
+                                </button>
+                            </li>
+                            <li class="dropdown-item">
+                                <a class=" me-2 text-capitalize pe-2" href="{{ path('app_logout') }}">
+                                    Déconnexion
+                                </a>
+                            </li>
 
-                    </li>
-                    <a class="btn btn primary btn-outline-primary me-2" href="{{ path('app_logout') }}">Déconnexion</a>
+                        </ul>
+                    </div>
+
 
                 {% else %}
                     <div class="col-md-6">

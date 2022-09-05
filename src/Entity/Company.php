@@ -4,10 +4,11 @@ namespace App\Entity;
 
 use App\Repository\CompanyRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CompanyRepository::class)]
-class Company
+class Company implements Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -65,5 +66,10 @@ class Company
         $this->address_id = $address_id;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

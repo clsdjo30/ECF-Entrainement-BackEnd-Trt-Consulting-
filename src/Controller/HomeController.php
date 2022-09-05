@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\AddressRepository;
+use App\Repository\AnnounceRepository;
+use App\Repository\CompanyRepository;
+use App\Repository\RecruiterRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,11 +13,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(): Response
-    {
+    public function index(
+        AnnounceRepository $announceRepository,
+        RecruiterRepository $recruiterRepository,
+        CompanyRepository $companyRepository,
+        AddressRepository $addressRepository
+    ): Response {
+        $announces = $announceRepository->findAll();
+        $recruiters = $recruiterRepository->findAll();
+        $companies = $companyRepository->findAll();
+        $addresses = $addressRepository->findAll();
 
 
-        return $this->render('home/index.html.twig');
+        return $this->render('home/index.html.twig', [
+            'announces' => $announces,
+            'recruiters' => $recruiters,
+            'companies' => $companies,
+            'addresses' => $addresses,
+        ]);
     }
 
     #[Route('/verification', name: 'app_home_verification')]

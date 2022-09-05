@@ -6,9 +6,10 @@ use App\Repository\RecruiterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 
 #[ORM\Entity(repositoryClass: RecruiterRepository::class)]
-class Recruiter
+class Recruiter implements Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -37,14 +38,6 @@ class Recruiter
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<int, Company>
-     */
-    public function getCompanyId(): Collection
-    {
-        return $this->company_id;
     }
 
     public function addCompanyId(Company $companyId): self
@@ -150,4 +143,47 @@ class Recruiter
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        $company = $this->showCompanyName();
+        $city = $this->showCompanyCity();
+
+        return "L'entreprise ".implode(',', $company)." à ".implode(',', $city);
+    }
+
+    /**
+     * @return Collection<int, Company>
+     */
+    public function showCompanyName(): array
+    {
+        $companies = $this->company_id;
+        $companyNames = [];
+        foreach ($companies as $company) {
+            $companyNames[] = $company->getName();
+        }
+
+        return $companyNames;
+    }
+
+    /**
+     * @return Collection<int, Company>
+     */
+    public function showCompanyCity(): array
+    {
+        $companies = $this->company_id;
+        $companyNames = [];
+        $adresses = [];
+
+        foreach ($companies as $company) {
+            $companyNames[] = $company->getAddressId();
+            foreach ($companyNames as $companyName) {
+                $adresses[] = $companyName->getCity();
+            }
+        }
+
+        return $adresses;
+    }
+
+
 }
