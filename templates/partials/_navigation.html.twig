@@ -44,19 +44,32 @@
                     <a class="btn btn primary btn-outline-primary me-2" href="{{ path('app_logout') }}">Déconnexion</a>
 
                 {% elseif is_granted('ROLE_CANDIDATE') %}
-                    <a class="btn btn primary btn-outline-warning me-2">Vous êtes connecté en tant que :
-                        {% for role in app.user.roles %}
-                            {% if role == 'ROLE_CANDIDATE' %}
-                                Candidat
-                            {% endif %}
-                        {% endfor %}
-                    </a>
-                    <a class="btn btn primary btn-outline-primary me-2" href="{# route candidate #}">Mon Compte</a>
+
+                    <li class="nav-item dropdown btn btn-outline-info  me-2">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            {% for role in app.user.roles %}
+                                {% if role == 'ROLE_CANDIDATE' %}
+                                    Candidat
+                                {% endif %}
+                            {% endfor %}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+
+                    </li>
                     <a class="btn btn primary btn-outline-primary me-2" href="{{ path('app_logout') }}">Déconnexion</a>
+
                 {% else %}
                     <div class="col-md-6">
                         <a class="btn btn primary btn-outline-primary me-2 text-capitalize pe-2"
-                           href="{{ path('app_login') }}">se connecter a L'app</a>
+                           href="{{ path('app_login') }}">se connecter</a>
                     </div>
                 {% endif %}
 
