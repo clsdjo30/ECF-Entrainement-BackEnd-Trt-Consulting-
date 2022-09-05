@@ -2,11 +2,10 @@
 
 namespace App\Controller;
 
-use App\Repository\AddressRepository;
 use App\Repository\AnnounceRepository;
-use App\Repository\CompanyRepository;
-use App\Repository\RecruiterRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,21 +14,20 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(
         AnnounceRepository $announceRepository,
-        RecruiterRepository $recruiterRepository,
-        CompanyRepository $companyRepository,
-        AddressRepository $addressRepository
+        PaginatorInterface $paginator,
+        Request $request
     ): Response {
-        $announces = $announceRepository->findAll();
-        $recruiters = $recruiterRepository->findAll();
-        $companies = $companyRepository->findAll();
-        $addresses = $addressRepository->findAll();
+        $data = $announceRepository->findAll();
+
+        $announces = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            6
+        );
 
 
         return $this->render('home/index.html.twig', [
             'announces' => $announces,
-            'recruiters' => $recruiters,
-            'companies' => $companies,
-            'addresses' => $addresses,
         ]);
     }
 
