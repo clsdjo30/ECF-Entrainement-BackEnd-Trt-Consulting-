@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Repository\AnnounceRepository;
+use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,10 +16,16 @@ class CandidateController extends AbstractController
 {
     #[Route('/', name: 'app_candidate_home', methods: ('GET'))]
     public function index(
+        UserRepository $userRepository,
         AnnounceRepository $announceRepository,
         PaginatorInterface $paginator,
         Request $request
     ): Response {
+
+        if ($userRepository->findUserNotActive()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $data = $announceRepository->findAll();
 
         $announces = $paginator->paginate(
