@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Completer mon profil{% endblock %}
+
+{% block content %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    <div class="banner">
+
+        {{ include('candidate/profil/_form.html.twig') }}
+    </div>
+
+{% endblock %}

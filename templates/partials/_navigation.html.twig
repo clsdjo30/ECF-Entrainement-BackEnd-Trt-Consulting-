@@ -55,17 +55,19 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end list-unstyled">
                             <li>
-                                <button class="dropdown-item" type="button">Mes Informations</button>
-                            </li>
-                            <li>
-                                <button class="dropdown-item" type="button"></button>
+                                <button class="dropdown-item" type="button">
+                                    <a href="{{ path('app_candidate_details', {id: app.user.candidate.id}) }}"
+                                       class="text-decoration-none text-black">
+                                        Mon Compte
+                                    </a>
+                                </button>
                             </li>
                             <li>
                                 <button class="dropdown-item" type="button">Mes Announces</button>
                             </li>
                             <li>
                                 <button class="dropdown-item" type="button">
-                                    <a href="{{ path('app_candidate_home') }}"
+                                    <a href="{{ path('app_announces') }}"
                                        class="text-decoration-none text-black">
                                         Voir les announces
                                     </a>

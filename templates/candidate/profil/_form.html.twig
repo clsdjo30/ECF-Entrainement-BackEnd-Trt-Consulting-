@@ -1,0 +1,44 @@
+<div class=" container d-flex justify-content-center mt-4">
+    <div class="card col-6  mt-5 mb-5">
+        <div class="card-header text-capitalize text-xl-center fa-3x">completer mes informations</div>
+        <div class="card-body ">
+
+            {{ form_start(form) }}
+            <div class="">
+
+
+                <!-- Form Group (FirstName)-->
+                <div class="mt-3 ">
+                    {{ form_label(form.firstname) }}
+
+                    {{ form_widget(form.firstname) }}
+                </div>
+
+
+                <!-- Form Group (LastName)-->
+                <div class="mt-3">
+                    {{ form_label(form.lastname) }}
+                    {{ form_widget(form.lastname) }}
+                </div>
+
+
+                <!-- Form Group (Cv File)-->
+                <div class="mt-3">
+                    {{ form_label(form.cv) }}
+                    {{ form_widget(form.cv) }}
+                </div>
+
+                <!-- Save changes button-->
+
+                <button
+                        type="submit"
+                        class=" col-12  btn btn-lg btn-outline-primary text-black mt-3">
+                    Valider
+                </button>
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+</div>
+
