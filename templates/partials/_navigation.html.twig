@@ -13,14 +13,8 @@
             </ul>
             <div class="col-md-4  d-flex justify-content-around align-items-center text-end btn-group">
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a class="btn btn primary btn-outline-warning me-2">Vous êtes connecté en tant que :
-                        {% for role in app.user.roles %}
-                            {% if role == 'ROLE_ADMIN' %}
-                                Administrateur
-                            {% endif %}
-                        {% endfor %}
-                    </a>
-                    <a class="btn btn primary btn-outline-primary me-2" href="{# route admin #}">Mon Compte</a>
+
+                    <a class="btn btn primary btn-outline-primary me-2" href="{{ path('admin') }}">Administration</a>
                     <a class="btn btn primary btn-outline-primary me-2" href="{{ path('app_logout') }}">Déconnexion</a>
                 {% elseif is_granted('ROLE_CONSULTANT') %}
                     <a class="btn btn primary btn-outline-warning me-2">Vous êtes connecté en tant que :

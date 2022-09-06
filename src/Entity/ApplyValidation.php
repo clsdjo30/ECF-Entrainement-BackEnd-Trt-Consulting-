@@ -5,9 +5,12 @@ namespace App\Entity;
 use App\Repository\ApplyValidationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: ApplyValidationRepository::class)]
 class ApplyValidation
 {
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -64,4 +67,6 @@ class ApplyValidation
 
         return $this;
     }
+
+
 }

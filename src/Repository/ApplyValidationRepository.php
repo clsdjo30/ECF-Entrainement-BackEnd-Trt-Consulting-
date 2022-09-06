@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\ApplyValidation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +41,16 @@ class ApplyValidationRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return ApplyValidation[] Returns an array of ApplyValidation objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getNumPendingCandidate()
+    {
+        $totalPendingAnnounce = $this->createQueryBuilder('val')
+            ->where('val.candidateIsValid = true')
+            ->select('COUNT(val.id) as value');
 
-//    public function findOneBySomeField($value): ?ApplyValidation
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $totalPendingAnnounce->getQuery()->getSingleScalarResult();
+    }
 }

@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\PublishValidation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +41,16 @@ class PublishValidationRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return PublishValidation[] Returns an array of PublishValidation objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getNumPendingAnnounce()
+    {
+        $totalPendingAnnounce = $this->createQueryBuilder('val')
+            ->where('val.announceIsValid = true')
+            ->select('COUNT(val.id) as value');
 
-//    public function findOneBySomeField($value): ?PublishValidation
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $totalPendingAnnounce->getQuery()->getSingleScalarResult();
+    }
 }
