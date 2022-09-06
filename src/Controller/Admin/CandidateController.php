@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Announce;
 use App\Repository\AnnounceRepository;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -36,6 +37,15 @@ class CandidateController extends AbstractController
 
         return $this->render('candidate/index.html.twig', [
             'announces' => $announces,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_candidate_announce_show', methods: ['GET', 'POST'])]
+    public function showAnnonce(
+        Announce $announce
+    ): Response {
+        return $this->render('candidate/show_announce_details.html.twig', [
+            'announce' => $announce,
         ]);
     }
 }

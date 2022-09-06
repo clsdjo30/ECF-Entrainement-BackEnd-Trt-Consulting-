@@ -37,20 +37,7 @@
                                     <p class="card-text">
                                         {{ announce.description | u.truncate(100, '...', true) }}
                                     </p>
-                                    <ul>
-                                        <li>
-                                            {{ announce.experience }} sur le même type de poste
-                                        </li>
-                                        <li>
-                                            {{ announce.hourly }}
-                                        </li>
-                                        <li>
-                                            Avantages : {{ announce.benefits }}
-                                        </li>
-                                        <li>
-                                            Salaire : {{ announce.salary }}
-                                        </li>
-                                    </ul>
+                                    
                                 </div>
                                 <div class="card-footer d-flex justify-content-end">
 
@@ -59,7 +46,7 @@
                                         Votre candidature est en cours de traitement !
                                     </p>
                                     {# else #}
-                                    <a href="{{ path('app_home', {id: announce.id}) }} "
+                                    <a href="{{ path('app_candidate_announce_show', {id: announce.id}) }} "
                                        class="btn btn-primary">
                                         Postuler en 1 click
                                     </a>
