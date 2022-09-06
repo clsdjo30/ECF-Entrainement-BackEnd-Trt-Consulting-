@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container py-5 mb-5">
+    <div class="row row-cols-2 justify-content-center pt-5 mb-5">
+
+        <div class="col-8 gap-5">
+            <div class="card  rounded-3 shadow  bg-opacity-25">
+
+                <div class="card border-primary">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            {{ announce.title }}
+                        </h4>
+                        <h5>
+                            {{ announce.recruiter }}
+                        </h5>
+                        <p>
+                            Type de poste : {{ announce.category }}
+                        </p>
+                        <p>
+                            publiée le : {{ announce.createdAt | date('d-m-Y') }}
+                        </p>
+                    </div>
+                    <div class="card-body text-secondary">
+
+                        <h5 class="card-title">
+                            Description
+                        </h5>
+
+                        <p class="card-text">
+                            {{ announce.description }}
+                        </p>
+                        <ul>
+                            <li>
+                                {{ announce.experience }} sur le même type de poste
+                            </li>
+                            <li>
+                                {{ announce.hourly }}
+                            </li>
+                            <li>
+                                Avantages : {{ announce.benefits }}
+                            </li>
+                            <li>
+                                Salaire : {{ announce.salary }}
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <div class="d-flex justify-content-around card-footer bg-transparent border-secondary">
+                        <a href="{# path('app_annonces_applied',  {id: announce.id, }) #}"
+                           class="btn btn-primary text-uppercase" type="submit">
+                            ajouter ma candidature
+                        </a>
+                        <a href="{{ path('app_candidate_home') }}" class="btn btn-outline-secondary">
+                            Revenir aux annonces
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+{% endblock %}

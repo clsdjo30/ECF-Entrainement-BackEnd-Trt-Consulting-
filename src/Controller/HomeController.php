@@ -2,33 +2,16 @@
 
 namespace App\Controller;
 
-use App\Repository\AnnounceRepository;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(
-        AnnounceRepository $announceRepository,
-        PaginatorInterface $paginator,
-        Request $request
-    ): Response {
-        $data = $announceRepository->findAll();
-
-        $announces = $paginator->paginate(
-            $data,
-            $request->query->getInt('page', 1),
-            6
-        );
-
-
-        return $this->render('home/index.html.twig', [
-            'announces' => $announces,
-        ]);
+    public function index(): Response
+    {
+        return $this->render('home/index.html.twig');
     }
 
     #[Route('/verification', name: 'app_home_verification')]
