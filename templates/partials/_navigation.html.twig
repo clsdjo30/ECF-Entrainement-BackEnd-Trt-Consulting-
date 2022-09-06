@@ -53,7 +53,7 @@
                                 {% endif %}
                             {% endfor %}
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
+                        <ul class="dropdown-menu dropdown-menu-end list-unstyled">
                             <li>
                                 <button class="dropdown-item" type="button">Mes Informations</button>
                             </li>
@@ -65,7 +65,8 @@
                             </li>
                             <li>
                                 <button class="dropdown-item" type="button">
-                                    <a href="{{ path('app_candidate_home') }}">
+                                    <a href="{{ path('app_candidate_home') }}"
+                                       class="text-decoration-none text-black">
                                         Voir les announces
                                     </a>
                                 </button>
@@ -79,7 +80,8 @@
                                 </button>
                             </li>
                             <li class="dropdown-item">
-                                <a class=" me-2 text-capitalize pe-2" href="{{ path('app_logout') }}">
+                                <a class=" me-2 text-capitalize pe-2 text-decoration-none text-black"
+                                   href="{{ path('app_logout') }}">
                                     Déconnexion
                                 </a>
                             </li>
