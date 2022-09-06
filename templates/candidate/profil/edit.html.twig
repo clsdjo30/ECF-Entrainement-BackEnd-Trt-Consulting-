@@ -7,17 +7,9 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <div class="banner d-flex justify-content-center align-items-center flex-column">
-        <h1 class="text-center text-capitalize text-black font-monospace mb-5">
-            Completer mon profil
-        </h1>
+    <div class="banner">
 
-        <div class="row">
-            <div class="col d-flex justify-content-between flex-column align-items-center">
-
-                {{ include('candidate/profil/_form.html.twig') }}
-
-            </div>
-        </div>
+        {{ include('candidate/profil/_form.html.twig') }}
     </div>
+
 {% endblock %}
