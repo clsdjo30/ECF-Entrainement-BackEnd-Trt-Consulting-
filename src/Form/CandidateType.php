@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\Candidate;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class CandidateType extends AbstractType
 {
@@ -27,12 +29,23 @@ class CandidateType extends AbstractType
                 'label' => 'Nom de Famille',
 
             ])
-            ->add('cvFile', TextType::class, [
+            ->add('cv', FileType::class, [
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Mon CV',
-
+                'label' => 'Téléchargez votre CV (au formatPdf)',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'application/pdf',
+                            'application/x-pdf',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid PDF document',
+                    ]),
+                ],
             ]);
     }
 
