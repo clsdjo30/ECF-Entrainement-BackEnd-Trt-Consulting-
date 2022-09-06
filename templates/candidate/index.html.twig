@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Espace Candidat{% endblock %}
+
+{% block content %}
+    {% if is_granted('ROLE_CANDIDATE') %}
+
+        <div class="container">
+            <h1 class="text-center display-5 text-capitalize py-5">Offres d'emploi</h1>
+
+            <div class="col">
+
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                    {% for announce in announces %}
+                        <div class="col">
+                            <div class="card border-primary">
+                                <div class="card-header">
+                                    <h4 class="card-title">
+                                        {{ announce.title }}
+                                    </h4>
+                                    <h5>
+                                        {{ announce.recruiter }}
+                                    </h5>
+                                    <p>
+                                        Type de poste : {{ announce.category }}
+                                    </p>
+                                    <p>
+                                        publiée le : {{ announce.createdAt | date('d-m-Y') }}
+                                    </p>
+                                </div>
+                                <div class="card-body text-secondary">
+
+                                    <h5 class="card-title">
+                                        Description
+                                    </h5>
+
+                                    <p class="card-text">
+                                        {{ announce.description | u.truncate(100, '...', true) }}
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            {{ announce.experience }} sur le même type de poste
+                                        </li>
+                                        <li>
+                                            {{ announce.hourly }}
+                                        </li>
+                                        <li>
+                                            Avantages : {{ announce.benefits }}
+                                        </li>
+                                        <li>
+                                            Salaire : {{ announce.salary }}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-footer d-flex justify-content-end">
+
+                                    {# if (announce.isApplied(app.user.candidate)) #}
+                                    <p class="text-success text-xl">
+                                        Votre candidature est en cours de traitement !
+                                    </p>
+                                    {# else #}
+                                    <a href="{{ path('app_home', {id: announce.id}) }} "
+                                       class="btn btn-primary">
+                                        Postuler en 1 click
+                                    </a>
+                                    {# endif #}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="d-flex justify-content-center align-items-center my-5">
+                    {{ knp_pagination_render(announces, 'partials/_pagination.html.twig') }}
+                </div>
+            </div>
+
+        </div>
+    {% endif %}
+{% endblock %}
