@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Crud;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
@@ -36,11 +37,12 @@ class UserCrudController extends AbstractCrudController
     {
         yield IdField::new('id')->hideOnIndex()->hideOnForm();
         yield EmailField::new('email');
-        yield TextField::new('password');
+        yield TextField::new('password')->hideOnForm();
+        yield ArrayField::new('roles');
         yield BooleanField::new('isVerified');
         yield BooleanField::new('isValidated');
-        yield AssociationField::new('recruiter');
-        yield AssociationField::new('candidate');
+        yield AssociationField::new('recruiter')->hideOnIndex()->hideOnForm();
+        yield AssociationField::new('candidate')->hideOnIndex()->hideOnForm();
     }
 
 
