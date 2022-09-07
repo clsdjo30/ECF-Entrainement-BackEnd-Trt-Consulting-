@@ -4,10 +4,11 @@ namespace App\Entity;
 
 use App\Repository\ApplyValidationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 
 
 #[ORM\Entity(repositoryClass: ApplyValidationRepository::class)]
-class ApplyValidation
+class ApplyValidation implements Stringable
 {
 
 
@@ -69,4 +70,8 @@ class ApplyValidation
     }
 
 
+    public function __toString(): string
+    {
+        return $this->announce;
+    }
 }

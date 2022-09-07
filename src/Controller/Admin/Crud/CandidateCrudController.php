@@ -4,6 +4,8 @@ namespace App\Controller\Admin\Crud;
 
 use App\Entity\Candidate;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -17,6 +19,20 @@ class CandidateCrudController extends AbstractCrudController
     {
         return Candidate::class;
     }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $details = Action::new('details', 'details')
+            ->addCssClass('text-warning')
+            ->linkToCrudAction(Crud::PAGE_DETAIL);
+
+
+        return $actions
+            ->setPermission(Action::DELETE, "ROLE_CONSULTANT")
+            ->setPermission(Action::EDIT, "ROLE_CONSULTANT")
+            ->add(Crud::PAGE_INDEX, $details);
+    }
+
 
     public function configureCrud(Crud $crud): Crud
     {
@@ -33,14 +49,15 @@ class CandidateCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        return [
-            IdField::new('id')->hideOnIndex()->onlyOnForms(),
-            TextField::new('firstname', 'Prénom'),
-            TextField::new('lastname', 'Nom de famille'),
-            TextField::new('cvfile', 'Téléchargez votre cv(format pdf conseiller)'),
-            AssociationField::new('user')->renderAsNativeWidget(),
-            CollectionField::new('applyValidations'),
-        ];
+
+        yield IdField::new('id')->hideOnIndex()->onlyOnForms();
+        yield AssociationField::new('user', 'Utilisateur');
+        yield TextField::new('firstname', 'Prénom');
+        yield TextField::new('lastname', 'Nom de famille');
+        yield TextField::new('cvFile', 'Curriculum Vitae');
+        yield CollectionField::new('applyValidations', 'Candidature approuvée');
+
+
     }
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void

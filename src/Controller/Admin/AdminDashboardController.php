@@ -8,9 +8,9 @@ use App\Entity\Announce;
 use App\Entity\ApplyValidation;
 use App\Entity\Candidate;
 use App\Entity\Category;
+use App\Entity\Company;
 use App\Entity\Consultant;
 use App\Entity\PublishValidation;
-use App\Entity\Recruiter;
 use App\Entity\User;
 use App\Repository\ApplyValidationRepository;
 use App\Repository\PublishValidationRepository;
@@ -99,7 +99,11 @@ class AdminDashboardController extends AbstractDashboardController
         yield MenuItem::section('Utilisateurs');
         yield MenuItem::linkToCrud('Consultants', 'fa fa-house-user', Consultant::class);
         yield MenuItem::linkToCrud('Candidats', 'fa fa-utensils', Candidate::class);
-        yield MenuItem::linkToCrud('Recruteurs', 'fa-solid fa-hotel', Recruiter::class);
+        yield MenuItem::subMenu('Recruteurs', 'fa-solid fa-hotel')
+            ->setSubItems([
+                MenuItem::linkToCrud('Recruteurs', 'fa-solid fa-hotel', Company::class),
+                MenuItem::linkToCrud('Annonces validées', 'fa fa-news', PublishValidation::class),
+            ]);
 
 
     }

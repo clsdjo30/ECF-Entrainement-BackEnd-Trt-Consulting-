@@ -6,17 +6,19 @@ use App\Repository\RecruiterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Stringable;
 
 #[ORM\Entity(repositoryClass: RecruiterRepository::class)]
-class Recruiter implements Stringable
+class Recruiter
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: Company::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: Company::class, cascade: [
+        'persist',
+        'remove',
+    ], orphanRemoval: true)]
     private Collection $company_id;
 
     #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: Announce::class, orphanRemoval: true)]
@@ -122,6 +124,11 @@ class Recruiter implements Stringable
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return $this->getUserId();
+    }
+
     public function getUserId(): ?User
     {
         return $this->user_id;
@@ -144,16 +151,8 @@ class Recruiter implements Stringable
         return $this;
     }
 
-    public function __toString(): string
-    {
-        $company = $this->showCompanyName();
-        $city = $this->showCompanyCity();
-
-        return "L'entreprise ".implode(',', $company)." à ".implode(',', $city);
-    }
-
     /**
-     * @return Collection<int, Company>
+     * @return array
      */
     public function showCompanyName(): array
     {
@@ -167,7 +166,7 @@ class Recruiter implements Stringable
     }
 
     /**
-     * @return Collection<int, Company>
+     * @return array
      */
     public function showCompanyCity(): array
     {

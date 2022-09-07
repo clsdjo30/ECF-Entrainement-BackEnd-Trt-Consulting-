@@ -3,6 +3,8 @@
 namespace App\Controller\Admin\Crud;
 
 use App\Entity\Recruiter;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -15,6 +17,20 @@ class RecruiterCrudController extends AbstractCrudController
     {
         return Recruiter::class;
     }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $details = Action::new('details', 'details')
+            ->addCssClass('text-warning')
+            ->linkToCrudAction(Crud::PAGE_DETAIL);
+
+
+        return $actions
+            ->setPermission(Action::DELETE, "ROLE_CONSULTANT")
+            ->setPermission(Action::EDIT, "ROLE_CONSULTANT")
+            ->add(Crud::PAGE_INDEX, $details);
+    }
+
 
     public function configureCrud(Crud $crud): Crud
     {
@@ -34,9 +50,8 @@ class RecruiterCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnIndex()->onlyOnForms(),
             AssociationField::new('user_id', 'Recruteurs'),
-            CollectionField::new('company_id', "Nom de l'entreprise"),
-            CollectionField::new('publishValidation', 'Annonces validés'),
-            CollectionField::new('announce_id', 'Annonces'),
+            AssociationField::new('announce_id', 'Annonces'),
+            CollectionField::new('publishValidations', 'Annonces validés'),
 
         ];
     }
