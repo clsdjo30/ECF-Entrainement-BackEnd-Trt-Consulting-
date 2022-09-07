@@ -23,14 +23,12 @@ class CandidateCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInPlural('Candidats')
             ->setEntityLabelInSingular('Candidat')
-            ->setPageTitle('index', 'Toutes les %entity_label_plural%')
+            ->setPageTitle('index', 'Tous les %entity_label_plural%')
             ->setPageTitle('edit', 'Compléter mon profil')
-            ->setPageTitle('new', 'Ajouter un nouveau %entity_label_singular%')
             ->setPaginatorPageSize(15)
             ->setDateFormat('dd:MM:yyyy')
             ->showEntityActionsInlined()
-            ->setDefaultSort(['id' => 'desc'])
-            ->showEntityActionsInlined();
+            ->setDefaultSort(['id' => 'desc']);
     }
 
     public function configureFields(string $pageName): iterable

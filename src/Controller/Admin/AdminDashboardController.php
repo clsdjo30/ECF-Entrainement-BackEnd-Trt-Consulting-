@@ -2,10 +2,15 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\Admin\Crud\CategoryCrudController;
 use App\Controller\Admin\Crud\UserCrudController;
+use App\Entity\Announce;
 use App\Entity\ApplyValidation;
 use App\Entity\Candidate;
+use App\Entity\Category;
+use App\Entity\Consultant;
 use App\Entity\PublishValidation;
+use App\Entity\Recruiter;
 use App\Entity\User;
 use App\Repository\ApplyValidationRepository;
 use App\Repository\PublishValidationRepository;
@@ -73,12 +78,28 @@ class AdminDashboardController extends AbstractDashboardController
         $numPendingAnnounces = $this->publishValidationRepository->getNumPendingAnnounce();
 
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Utilisateur', 'fa fa-question-circle', User::class);
-        yield MenuItem::linkToCrud('Candidats', 'fa fa-question-circle', Candidate::class);
-        yield MenuItem::linkToCrud('Validation', 'fa fa-user', ApplyValidation::class)
+
+        yield MenuItem::section('Nouveaux Inscrits');
+        yield MenuItem::linkToCrud('A valider', 'fa fa-circle-exclamation', User::class);
+
+        yield MenuItem::section('Candidature à valider');
+        yield MenuItem::linkToCrud('A vérifier', 'fa fa-circle-exclamation', ApplyValidation::class)
             ->setBadge($numPendingCandidate, 'warning');
-        yield MenuItem::linkToCrud('Validation', 'fa fa-user', PublishValidation::class)
+
+        yield MenuItem::section('Announces à valider');
+        yield MenuItem::linkToCrud('A vérifier', 'fa fa-circle-exclamation', PublishValidation::class)
             ->setBadge($numPendingAnnounces, 'warning');
+
+        yield MenuItem::section('Les Annonces');
+        yield MenuItem::linkToCrud('Annonces', 'fa-solid fa-pen-to-square', Announce::class);
+        yield MenuItem::linkToCrud('Categories', 'fa fa-tags', Category::class)->setController(
+            CategoryCrudController::class
+        );
+
+        yield MenuItem::section('Utilisateurs');
+        yield MenuItem::linkToCrud('Consultants', 'fa fa-house-user', Consultant::class);
+        yield MenuItem::linkToCrud('Candidats', 'fa fa-utensils', Candidate::class);
+        yield MenuItem::linkToCrud('Recruteurs', 'fa-solid fa-hotel', Recruiter::class);
 
 
     }
