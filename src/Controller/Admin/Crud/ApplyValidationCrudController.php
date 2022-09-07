@@ -3,6 +3,8 @@
 namespace App\Controller\Admin\Crud;
 
 use App\Entity\ApplyValidation;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -15,6 +17,20 @@ class ApplyValidationCrudController extends AbstractCrudController
     {
         return ApplyValidation::class;
     }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $details = Action::new('details', 'details')
+            ->addCssClass('text-warning')
+            ->linkToCrudAction(Crud::PAGE_DETAIL);
+
+
+        return $actions
+            ->setPermission(Action::DELETE, "ROLE_CONSULTANT")
+            ->setPermission(Action::EDIT, "ROLE_CONSULTANT")
+            ->add(Crud::PAGE_INDEX, $details);
+    }
+
 
     public function configureCrud(Crud $crud): Crud
     {
@@ -38,6 +54,5 @@ class ApplyValidationCrudController extends AbstractCrudController
 
         ];
     }
-
 
 }

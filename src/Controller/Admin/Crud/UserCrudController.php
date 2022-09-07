@@ -3,6 +3,8 @@
 namespace App\Controller\Admin\Crud;
 
 use App\Entity\User;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
@@ -33,16 +35,30 @@ class UserCrudController extends AbstractCrudController
             ->showEntityActionsInlined();
     }
 
+    public function configureActions(Actions $actions): Actions
+    {
+        $details = Action::new('details', 'details')
+            ->addCssClass('text-warning')
+            ->linkToCrudAction(Crud::PAGE_DETAIL);
+
+
+        return $actions
+            ->setPermission(Action::DELETE, "ROLE_CONSULTANT")
+            ->setPermission(Action::EDIT, "ROLE_CONSULTANT")
+            ->add(Crud::PAGE_INDEX, $details);
+    }
+
+
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnIndex()->hideOnForm();
         yield EmailField::new('email');
-        yield TextField::new('password')->hideOnForm();
-        yield ArrayField::new('roles');
-        yield BooleanField::new('isVerified');
-        yield BooleanField::new('isValidated');
-        yield AssociationField::new('recruiter')->hideOnIndex()->hideOnForm();
-        yield AssociationField::new('candidate')->hideOnIndex()->hideOnForm();
+        yield TextField::new('password', 'Mot de Passe')->hideOnForm();
+        yield ArrayField::new('roles', 'Roles');
+        yield BooleanField::new('isVerified', 'Vérifié');
+        yield BooleanField::new('isValidated', 'Validé');
+        yield AssociationField::new('recruiter', 'Recruteur')->hideOnIndex()->hideOnForm();
+        yield AssociationField::new('candidate', 'Candidats')->hideOnIndex()->hideOnForm();
     }
 
 
