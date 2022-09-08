@@ -84,14 +84,24 @@ class CategoriesAndAnnounceFixtures extends Fixture
 
         }
 
+
         foreach ($validAnnounces as $validAnnounce) {
-            $candidates = CandidateFactory::createMany(2);
-            foreach ($candidates as $candidate) {
-                ApplyValidationFactory::createOne([
-                    'candidate' => $candidate,
-                    'announce' => $validAnnounce->getAnnounce(),
-                ]);
-            }
+            $user = UserFactory::createOne([
+                'roles' => ['ROLE_CANDIDATE'],
+                'createdAt' => new DateTime(),
+                'updatedAt' => new DateTime(),
+                'isValidated' => true,
+                'isVerified' => true,
+            ]);
+
+            $candidate = CandidateFactory::createOne([
+                'user' => $user,
+            ]);
+
+            ApplyValidationFactory::createOne([
+                'candidate' => $candidate,
+                'announce' => $validAnnounce->getAnnounce(),
+            ]);
         }
     }
 

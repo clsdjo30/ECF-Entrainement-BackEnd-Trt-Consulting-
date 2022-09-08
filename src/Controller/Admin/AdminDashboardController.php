@@ -1,0 +1,110 @@
+<?php
+
+namespace App\Controller\Admin;
+
+use App\Controller\Admin\Crud\CategoryCrudController;
+use App\Controller\Admin\Crud\UserCrudController;
+use App\Entity\Announce;
+use App\Entity\ApplyValidation;
+use App\Entity\Candidate;
+use App\Entity\Category;
+use App\Entity\Company;
+use App\Entity\Consultant;
+use App\Entity\PublishValidation;
+use App\Entity\User;
+use App\Repository\ApplyValidationRepository;
+use App\Repository\PublishValidationRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+#[IsGranted('ROLE_CONSULTANT')]
+class AdminDashboardController extends AbstractDashboardController
+{
+    protected AdminUrlGenerator $adminUrlGenerator;
+    protected ApplyValidationRepository $applyValidationRepository;
+    protected PublishValidationRepository $publishValidationRepository;
+
+
+    /**
+     * @param AdminUrlGenerator $adminUrlGenerator
+     * @param ApplyValidationRepository $applyValidationRepository
+     * @param PublishValidationRepository $publishValidationRepository
+     */
+    public function __construct(
+        AdminUrlGenerator $adminUrlGenerator,
+        ApplyValidationRepository $applyValidationRepository,
+        PublishValidationRepository $publishValidationRepository
+    ) {
+        $this->adminUrlGenerator = $adminUrlGenerator;
+        $this->applyValidationRepository = $applyValidationRepository;
+        $this->publishValidationRepository = $publishValidationRepository;
+    }
+
+    #[Route('/admin', name: 'admin')]
+    public function index(): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_CONSULTANT');
+
+        $url = $this->adminUrlGenerator
+            ->setController(UserCrudController::class)
+            ->generateUrl();
+
+        return $this->redirect($url);
+
+
+    }
+
+    public function configureDashboard(): Dashboard
+    {
+        return Dashboard::new()
+            ->setTitle('Trt Consulting')
+            ->generateRelativeUrls('./admin.admin-dashboard.html.twig');
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function configureMenuItems(): iterable
+    {
+        $numPendingCandidate = $this->applyValidationRepository->getNumPendingCandidate();
+        $numPendingAnnounces = $this->publishValidationRepository->getNumPendingAnnounce();
+
+        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+
+        yield MenuItem::section('Nouveaux Inscrits');
+        yield MenuItem::linkToCrud('A valider', 'fa fa-circle-exclamation', User::class);
+
+        yield MenuItem::section('Candidature à valider');
+        yield MenuItem::linkToCrud('A vérifier', 'fa fa-circle-exclamation', ApplyValidation::class)
+            ->setBadge($numPendingCandidate, 'warning');
+
+        yield MenuItem::section('Announces à valider');
+        yield MenuItem::linkToCrud('A vérifier', 'fa fa-circle-exclamation', PublishValidation::class)
+            ->setBadge($numPendingAnnounces, 'warning');
+
+        yield MenuItem::section('Les Annonces');
+        yield MenuItem::linkToCrud('Annonces', 'fa-solid fa-pen-to-square', Announce::class);
+        yield MenuItem::linkToCrud('Categories', 'fa fa-tags', Category::class)->setController(
+            CategoryCrudController::class
+        );
+
+        yield MenuItem::section('Utilisateurs');
+        yield MenuItem::linkToCrud('Consultants', 'fa fa-house-user', Consultant::class);
+        yield MenuItem::linkToCrud('Candidats', 'fa fa-utensils', Candidate::class);
+        yield MenuItem::subMenu('Recruteurs', 'fa-solid fa-hotel')
+            ->setSubItems([
+                MenuItem::linkToCrud('Recruteurs', 'fa-solid fa-hotel', Company::class),
+                MenuItem::linkToCrud('Annonces validées', 'fa fa-news', PublishValidation::class),
+            ]);
+
+
+    }
+}

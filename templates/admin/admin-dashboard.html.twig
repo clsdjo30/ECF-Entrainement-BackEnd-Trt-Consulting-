@@ -1,0 +1,14 @@
+{#  templates/admin/my-custom-page.html.twig #}
+    {% extends '@EasyAdmin/page/content.html.twig' %}
+
+    {% block content_title %}TrT Consulting{% endblock %}
+
+
+{% block main %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+{% endblock %}

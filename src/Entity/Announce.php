@@ -9,13 +9,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Slug;
+use Stringable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: AnnounceRepository::class)]
 #[UniqueEntity(fields: ['slug'], message: 'announce.slug_unique', errorPath: 'title')]
-class Announce
+class Announce implements Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -273,5 +274,10 @@ class Announce
         $this->publishValidation = $publishValidation;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->title;
     }
 }

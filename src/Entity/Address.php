@@ -137,4 +137,9 @@ class Address
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->street_number.' '.$this->street_type.' '.$this->street_name.' - '.$this->zip_code.' - '.$this->city.' - '.$this->country;
+    }
 }
