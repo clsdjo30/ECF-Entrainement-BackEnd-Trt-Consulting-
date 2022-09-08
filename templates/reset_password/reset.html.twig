@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block content %}
+
+    <div class="banner d-flex justify-content-center align-items-center flex-column">
+        <h1 class="text-center text-capitalize text-black font-monospace mb-5">
+            Créer votre nouveau mot de passe
+        </h1>
+
+        <div class="row  d-flex justify-content-center flex-column align-items-center">
+
+            <div class="col-md-6">
+
+                {{ form_start(resetForm) }}
+                <div class="row text-primary font-monospace mb-3">
+                    {{ form_row(resetForm.plainPassword) }}
+
+                    <button class="btn btn-primary">Soumettre</button>
+                </div>
+                {{ form_end(resetForm) }}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

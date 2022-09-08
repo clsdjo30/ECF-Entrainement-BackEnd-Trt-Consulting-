@@ -1,0 +1,40 @@
+{% apply inky_to_html|inline_css(source('@styles/foundation-emails.css'), source('@styles/email.css')) %}
+    <container>
+        <row class="header">
+            <columns>
+                <h1 class="text-center">
+                    Trt Consulting
+                </h1>
+            </columns>
+        </row>
+        <row>
+            <columns>
+                <spacer size="30"></spacer>
+                <h2 class="text-center">
+                    Pour Réinitialiser votre mot de passe, merci de suivre le lien ci-dessous
+                </h2>
+                <spacer size="10"></spacer>
+            </columns>
+        </row>
+        <spacer size="30"></spacer>
+        <row>
+            <columns>
+                <p class="text-center">
+                    <button href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</button>
+                    .
+                </p>
+            </columns>
+        </row>
+
+        <row class="footer">
+            <columns>
+
+                <p class="text-right">Le lien est valide
+                    : {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}</p>
+
+
+            </columns>
+        </row>
+
+    </container>
+{% endapply %}
