@@ -15,12 +15,6 @@ class Recruiter
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: Company::class, cascade: [
-        'persist',
-        'remove',
-    ], orphanRemoval: true)]
-    private Collection $company_id;
-
     #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: Announce::class, orphanRemoval: true)]
     private Collection $announce_id;
 
@@ -32,7 +26,6 @@ class Recruiter
 
     public function __construct()
     {
-        $this->company_id = new ArrayCollection();
         $this->announce_id = new ArrayCollection();
         $this->publishValidations = new ArrayCollection();
     }
@@ -40,36 +33,6 @@ class Recruiter
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<int, Company>
-     */
-    public function getCompanyId(): Collection
-    {
-        return $this->company_id;
-    }
-
-    public function addCompanyId(Company $companyId): self
-    {
-        if (!$this->company_id->contains($companyId)) {
-            $this->company_id->add($companyId);
-            $companyId->setRecruiter($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCompanyId(Company $companyId): self
-    {
-        if ($this->company_id->removeElement($companyId)) {
-            // set the owning side to null (unless already changed)
-            if ($companyId->getRecruiter() === $this) {
-                $companyId->setRecruiter(null);
-            }
-        }
-
-        return $this;
     }
 
     /**
@@ -158,39 +121,5 @@ class Recruiter
 
         return $this;
     }
-
-    /**
-     * @return array
-     */
-    public function showCompanyName(): array
-    {
-        $companies = $this->company_id;
-        $companyNames = [];
-        foreach ($companies as $company) {
-            $companyNames[] = $company->getName();
-        }
-
-        return $companyNames;
-    }
-
-    /**
-     * @return array
-     */
-    public function showCompanyCity(): array
-    {
-        $companies = $this->company_id;
-        $companyNames = [];
-        $adresses = [];
-
-        foreach ($companies as $company) {
-            $companyNames[] = $company->getAddressId();
-            foreach ($companyNames as $companyName) {
-                $adresses[] = $companyName->getCity();
-            }
-        }
-
-        return $adresses;
-    }
-
 
 }
