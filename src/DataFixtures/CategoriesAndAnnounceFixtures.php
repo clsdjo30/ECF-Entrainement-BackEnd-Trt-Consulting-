@@ -3,11 +3,9 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
-use App\Factory\AddressFactory;
 use App\Factory\AnnounceFactory;
 use App\Factory\ApplyValidationFactory;
 use App\Factory\CandidateFactory;
-use App\Factory\CompanyFactory;
 use App\Factory\PublishValidationFactory;
 use App\Factory\RecruiterFactory;
 use App\Factory\UserFactory;
@@ -58,10 +56,6 @@ class CategoriesAndAnnounceFixtures extends Fixture
             $recruiter = RecruiterFactory::createOne([
                 'user_id' => $user,
 
-            ]);
-            CompanyFactory::createOne([
-                'recruiter' => $recruiter,
-                'address_id' => AddressFactory::createOne(),
             ]);
 
 

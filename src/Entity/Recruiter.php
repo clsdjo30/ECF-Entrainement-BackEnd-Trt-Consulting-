@@ -6,6 +6,7 @@ use App\Repository\RecruiterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RecruiterRepository::class)]
 class Recruiter
@@ -23,6 +24,22 @@ class Recruiter
 
     #[ORM\OneToOne(mappedBy: 'recruiter', cascade: ['persist', 'remove'])]
     private ?User $user_id = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    private ?string $address = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    private ?string $city = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    private ?string $country = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    private ?int $postal_code = null;
 
     public function __construct()
     {
@@ -118,6 +135,54 @@ class Recruiter
         }
 
         $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): self
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?int
+    {
+        return $this->postal_code;
+    }
+
+    public function setPostalCode(int $postal_code): self
+    {
+        $this->postal_code = $postal_code;
 
         return $this;
     }
