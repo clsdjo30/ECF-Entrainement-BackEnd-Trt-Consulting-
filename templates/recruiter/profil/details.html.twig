@@ -47,42 +47,64 @@
                     <div class="card-header">Mes informations</div>
                     <div class="card-body">
 
-                        <!-- Form Group (email address)-->
-                        <div class="mb-3">
-                            <p class="small mb-1">Email : {{ app.user.email }}</p>
-                        </div>
-
                         <form>
                             <!-- Form Row-->
                             <div class="row gx-3 mb-3">
-                                <!-- Form Group (FirstName)-->
+                                <!-- Form Group (User email)-->
                                 <div class="col-md-6">
-
-                                    <p>{{ app.user.recruiter }}</p>
-
+                                    <label class="small mb-1" for="inputFirstName">Email</label>
+                                    <input class="form-control" id="inputFirstName" type="text"
+                                           placeholder="Enter your first name"
+                                           value="{{ app.user.email }}"
+                                           disabled>
+                                </div>
+                                <!-- Form Group (CompanyName)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputFirstName">Nom de l'établissement</label>
+                                    <input class="form-control" id="inputFirstName" type="text"
+                                           placeholder="Enter your first name"
+                                           value="{{ app.user.recruiter.companyName }}"
+                                           disabled>
                                 </div>
                             </div>
-                            <!-- Form Row        -->
+
+                            <!-- Form Row-->
                             <div class="row gx-3 mb-3">
-                                <!-- Form Group (LastName)-->
+                                <!-- Form Group (Address)-->
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="inputOrgName">Nom de famille</label>
-                                    <input class="form-control" id="inputOrgName" type="text"
-                                           placeholder="Enter your organization name"
-                                           value="">
+                                    <label class="small mb-1" for="inputPhone">Adresse</label>
+                                    <input class="form-control" id="inputPhone" type="tel"
+                                           placeholder="Enter your phone number"
+                                           value="{{ app.user.recruiter.address }}"
+                                           disabled>
                                 </div>
                             </div>
                             <!-- Form Row-->
                             <div class="row gx-3 mb-3">
-                                <!-- Form Group (Cv File)-->
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputPhone">Mon Cv</label>
+                                <!-- Form Group (City)-->
+                                <div class="col-md-4">
+                                    <label class="small mb-1" for="inputPhone">Ville</label>
                                     <input class="form-control" id="inputPhone" type="tel"
                                            placeholder="Enter your phone number"
-                                           value="">
-
+                                           value="{{ app.user.recruiter.city }}"
+                                           disabled>
                                 </div>
-
+                                <!-- Form Group (Postal Code)-->
+                                <div class="col-md-4">
+                                    <label class="small mb-1" for="inputPhone">Code Postal</label>
+                                    <input class="form-control" id="inputPhone" type="tel"
+                                           placeholder="Enter your phone number"
+                                           value="{{ app.user.recruiter.postalCode }}"
+                                           disabled>
+                                </div>
+                                <!-- Form Group (Country)-->
+                                <div class="col-md-4">
+                                    <label class="small mb-1" for="inputPhone">Pays</label>
+                                    <input class="form-control" id="inputPhone" type="tel"
+                                           placeholder="Enter your phone number"
+                                           value="{{ app.user.recruiter.country }}"
+                                           disabled>
+                                </div>
                             </div>
                             <!-- Save changes button-->
                             <div class="d-flex justify-content-end">

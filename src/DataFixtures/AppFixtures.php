@@ -5,9 +5,9 @@ namespace App\DataFixtures;
 
 use App\Entity\Candidate;
 use App\Entity\Consultant;
+use App\Entity\Recruiter;
 use App\Entity\User;
 use App\Factory\ConsultantFactory;
-use App\Factory\RecruiterFactory;
 use App\Factory\UserFactory;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -76,7 +76,7 @@ class AppFixtures extends Fixture
         $userRecruiter->setIsVerified(true);
         $userRecruiter->setIsValidated(true);
 
-        $recruiter = (RecruiterFactory::createOne())
+        $recruiter = (new Recruiter())
             ->setUserId($userRecruiter);
 
 
