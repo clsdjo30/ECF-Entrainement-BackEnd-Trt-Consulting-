@@ -42,6 +42,14 @@ class Recruiter
         return $this->id;
     }
 
+    /**
+     * @return Collection<int, Company>
+     */
+    public function getCompanyId(): Collection
+    {
+        return $this->company_id;
+    }
+
     public function addCompanyId(Company $companyId): self
     {
         if (!$this->company_id->contains($companyId)) {

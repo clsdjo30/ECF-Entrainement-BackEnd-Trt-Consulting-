@@ -1,0 +1,59 @@
+<div class="container d-flex justify-content-center align-items-center h-100 w-50">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-header">
+                <h1 class="text-center display-5 text-capitalize">compléter mon profil</h1>
+            </div>
+            <form class="row g-3 p-5">
+                <div class="row">
+                    {{ form_start(recruiterForm) }}
+                    <div class="col-md-6">
+                        {{ form_label(recruiterForm.name) }}
+                        {{ form_widget(recruiterForm.name) }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    {{ dump(recruiterForm) }}
+                </div>
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-6">
+
+                </div>
+                <div class="col-md-6">
+
+                </div>
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <label class="form-check-label" for="gridCheck">
+                            Check me out
+                        </label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="col-12 btn  btn-outline-primary">
+                        <span class="fs-4 fw-semibold">Soumettre</span>
+                    </button>
+                </div>
+                {{ form_end(recruiterForm) }}
+            </form>
+            <div class="card-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

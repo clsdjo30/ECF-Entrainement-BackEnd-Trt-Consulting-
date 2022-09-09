@@ -19,7 +19,7 @@ class Company implements Stringable
     #[Assert\NotBlank]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'company_id')]
+    #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'company_id')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Recruiter $recruiter = null;
 

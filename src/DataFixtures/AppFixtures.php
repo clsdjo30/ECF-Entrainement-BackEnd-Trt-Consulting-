@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Candidate;
 use App\Entity\Consultant;
+use App\Entity\Recruiter;
 use App\Entity\User;
 use App\Factory\ConsultantFactory;
 use App\Factory\UserFactory;
@@ -75,8 +76,8 @@ class AppFixtures extends Fixture
         $userRecruiter->setIsVerified(true);
         $userRecruiter->setIsValidated(true);
 
-        $recruiter = (new Candidate())
-            ->setUser($userRecruiter);
+        $recruiter = (new Recruiter())
+            ->setUserId($userRecruiter);
 
 
         // Création de 5 CONSULTANT
