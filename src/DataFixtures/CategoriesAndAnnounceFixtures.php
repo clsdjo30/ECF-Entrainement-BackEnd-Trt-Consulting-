@@ -45,30 +45,26 @@ class CategoriesAndAnnounceFixtures extends Fixture
         // Création de 10 Recruteurs qui créent chacun 2 annonces
         for ($i = 0; $i < 30; $i++) {
             //1 user avec le role recruiter
-            $user = UserFactory::createOne([
+            $recruiter = UserFactory::createOne([
                 'roles' => ['ROLE_RECRUITER'],
                 'createdAt' => new DateTime(),
                 'updatedAt' => new DateTime(),
                 'isValidated' => true,
                 'isVerified' => true,
-            ]);
-
-            $recruiter = RecruiterFactory::createOne([
-                'user_id' => $user,
-
+                'recruiter' => RecruiterFactory::createOne(),
             ]);
 
 
             $category = $this->getReference('cat-'.random_int(1, 8));
             $announce = AnnounceFactory::createOne(
                 [
-                    'recruiter' => $recruiter,
+                    'recruiter' => $recruiter->getRecruiter(),
                     'category' => $category,
                 ]
             );
 
             $validAnnounce = PublishValidationFactory::createOne([
-                'recruiter' => $recruiter,
+                'recruiter' => $recruiter->getRecruiter(),
                 'announce' => $announce,
             ]);
 

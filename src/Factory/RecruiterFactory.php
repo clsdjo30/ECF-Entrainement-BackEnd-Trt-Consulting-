@@ -41,7 +41,7 @@ final class RecruiterFactory extends ModelFactory
             'address' => self::faker()->address(),
             'city' => self::faker()->city(),
             'country' => self::faker()->country(),
-            'postal_code' => self::faker()->countryCode(),
+            'postal_code' => self::faker()->numberBetween(10000, 100000),
 
         ];
     }
