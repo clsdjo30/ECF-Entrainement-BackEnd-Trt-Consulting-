@@ -37,6 +37,7 @@ final class RecruiterFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
+            'company_name' => self::faker()->company(),
             'address' => self::faker()->address(),
             'city' => self::faker()->city(),
             'country' => self::faker()->country(),

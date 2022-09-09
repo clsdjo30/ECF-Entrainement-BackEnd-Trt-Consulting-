@@ -41,6 +41,9 @@ class Recruiter
     #[Assert\NotBlank]
     private ?int $postal_code = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $company_name = null;
+
     public function __construct()
     {
         $this->announce_id = new ArrayCollection();
@@ -183,6 +186,18 @@ class Recruiter
     public function setPostalCode(int $postal_code): self
     {
         $this->postal_code = $postal_code;
+
+        return $this;
+    }
+
+    public function getCompanyName(): ?string
+    {
+        return $this->company_name;
+    }
+
+    public function setCompanyName(string $company_name): self
+    {
+        $this->company_name = $company_name;
 
         return $this;
     }
