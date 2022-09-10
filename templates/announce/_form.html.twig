@@ -5,45 +5,46 @@
                 <h1 class="text-center display-5 text-capitalize">Mon Annonce</h1>
             </div>
 
-
-            {{ form_start(createAnnounceForm) }}
-            <div class="row px-4 mb-4">
-                <div class="col-md-6">
-                    {{ form_label(createAnnounceForm.title) }}
-                    {{ form_widget(createAnnounceForm.title) }}
+            <div class="card-text py-3  ">
+                {{ form_start(createAnnounceForm) }}
+                <div class="row px-4 mb-5">
+                    <div class="col-md-6">
+                        {{ form_label(createAnnounceForm.title) }}
+                        {{ form_widget(createAnnounceForm.title) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(createAnnounceForm.category) }}
+                        {{ form_widget(createAnnounceForm.category) }}
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    {{ form_label(createAnnounceForm.category) }}
-                    {{ form_widget(createAnnounceForm.category) }}
+                <!-- Row Description -->
+                <div class="row  mb-5 px-4">
+                    <div class="col-md-12">
+                        {{ form_label(createAnnounceForm.description) }}
+                        {{ form_widget(createAnnounceForm.description) }}
+                    </div>
                 </div>
-            </div>
-            <!-- Row Description -->
-            <div class="row  mb-4 px-4">
-                <div class="col-md-12">
-                    {{ form_label(createAnnounceForm.description) }}
-                    {{ form_widget(createAnnounceForm.description) }}
+                <!-- Row Description -->
+                <div class="row mt-5 px-4">
+                    <div class="col-md-4">
+                        {{ form_label(createAnnounceForm.hourly) }}
+                        {{ form_widget(createAnnounceForm.hourly) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_label(createAnnounceForm.experience) }}
+                        {{ form_widget(createAnnounceForm.experience) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_label(createAnnounceForm.salary) }}
+                        {{ form_widget(createAnnounceForm.salary) }}
+                    </div>
                 </div>
-            </div>
-            <!-- Row Description -->
-            <div class="row mt-4 px-4">
-                <div class="col-md-4">
-                    {{ form_label(createAnnounceForm.hourly) }}
-                    {{ form_widget(createAnnounceForm.hourly) }}
-                </div>
-                <div class="col-md-4">
-                    {{ form_label(createAnnounceForm.experience) }}
-                    {{ form_widget(createAnnounceForm.experience) }}
-                </div>
-                <div class="col-md-4">
-                    {{ form_label(createAnnounceForm.salary) }}
-                    {{ form_widget(createAnnounceForm.salary) }}
-                </div>
-            </div>
-            <!--Row for Benefits -->
-            <div class="row  my-4 px-4">
-                <div class="col-md-6 ">
-                    {{ form_label(createAnnounceForm.benefits) }}
-                    {{ form_widget(createAnnounceForm.benefits, {'attr' :{'class':'form-select'}}) }}
+                <!--Row for Benefits -->
+                <div class="row  my-5 px-4">
+                    <div class="col-md-6 ">
+                        {{ form_label(createAnnounceForm.benefits) }}
+                        {{ form_widget(createAnnounceForm.benefits, {'attr' :{'class':'form-select'}}) }}
+                    </div>
                 </div>
             </div>
             <div class="col-12">
