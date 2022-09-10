@@ -70,6 +70,9 @@ class RecruiterController extends AbstractController
 
             $manager->flush();
 
+            $this->addFlash('success', 'Vos information ont bien été mise à jour ! ');
+
+
             return $this->redirectToRoute(
                 'app_recruiter_details',
                 ['id' => 'app.user.recruiter.id'],

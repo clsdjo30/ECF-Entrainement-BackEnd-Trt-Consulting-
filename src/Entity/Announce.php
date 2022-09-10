@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Slug;
+use Gedmo\Mapping\Annotation\Timestampable;
 use Stringable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -56,16 +57,18 @@ class Announce implements Stringable
     private ?bool $isValid = null;
 
     #[ORM\Column(type: 'datetime')]
+    #[Timestampable(on: 'create')]
     private ?DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: 'datetime')]
+    #[Timestampable(on: 'update')]
     private ?DateTimeInterface $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'announces')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[ORM\ManyToOne(inversedBy: 'announce_id')]
+    #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'announce_id')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Recruiter $recruiter = null;
 

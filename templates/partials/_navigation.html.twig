@@ -47,8 +47,16 @@
                             </li>
                             <li>
                                 <button class="dropdown-item" type="button">
-                                    <a href="{# lien vers les annonces que le recruteur a publié #}"></a>
-                                    Mes Announces
+                                    <a href="{{ path('app_announce_new') }}"
+                                       class="text-decoration-none text-black">
+                                        Publier une annonce
+                                    </a>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">
+                                    <a href="{#  #}"></a>
+                                    Mes annonces
                                 </button>
                             </li>
                             <li>
@@ -105,7 +113,7 @@
                             </li>
                             <li>
                                 <button class="dropdown-item" type="button">
-                                    <a href="{{ path('app_announces') }}"
+                                    <a href="{{ path('app_announce') }}"
                                        class="text-decoration-none text-black">
                                         Voir les announces
                                     </a>
