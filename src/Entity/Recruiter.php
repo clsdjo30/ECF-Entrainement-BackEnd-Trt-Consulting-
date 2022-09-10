@@ -19,9 +19,6 @@ class Recruiter
     #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: Announce::class, orphanRemoval: true)]
     private Collection $announce_id;
 
-    #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: PublishValidation::class, orphanRemoval: true)]
-    private Collection $publishValidations;
-
     #[ORM\OneToOne(mappedBy: 'recruiter', cascade: ['persist', 'remove'])]
     private ?User $user_id = null;
 
@@ -79,36 +76,6 @@ class Recruiter
             // set the owning side to null (unless already changed)
             if ($announceId->getRecruiter() === $this) {
                 $announceId->setRecruiter(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, PublishValidation>
-     */
-    public function getPublishValidations(): Collection
-    {
-        return $this->publishValidations;
-    }
-
-    public function addPublishValidation(PublishValidation $publishValidation): self
-    {
-        if (!$this->publishValidations->contains($publishValidation)) {
-            $this->publishValidations->add($publishValidation);
-            $publishValidation->setRecruiter($this);
-        }
-
-        return $this;
-    }
-
-    public function removePublishValidation(PublishValidation $publishValidation): self
-    {
-        if ($this->publishValidations->removeElement($publishValidation)) {
-            // set the owning side to null (unless already changed)
-            if ($publishValidation->getRecruiter() === $this) {
-                $publishValidation->setRecruiter(null);
             }
         }
 

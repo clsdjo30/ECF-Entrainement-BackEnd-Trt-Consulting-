@@ -67,9 +67,6 @@ class Announce implements Stringable
     #[ORM\OneToMany(mappedBy: 'announce', targetEntity: ApplyValidation::class, orphanRemoval: true)]
     private Collection $appliedCandidates;
 
-    #[ORM\OneToOne(mappedBy: 'announce', cascade: ['persist', 'remove'])]
-    private ?PublishValidation $publishValidation = null;
-
     public function __construct()
     {
         $this->appliedCandidates = new ArrayCollection();
@@ -250,23 +247,6 @@ class Announce implements Stringable
                 $appliedCandidate->setAnnounce(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getPublishValidation(): ?PublishValidation
-    {
-        return $this->publishValidation;
-    }
-
-    public function setPublishValidation(PublishValidation $publishValidation): self
-    {
-        // set the owning side of the relation if necessary
-        if ($publishValidation->getAnnounce() !== $this) {
-            $publishValidation->setAnnounce($this);
-        }
-
-        $this->publishValidation = $publishValidation;
 
         return $this;
     }

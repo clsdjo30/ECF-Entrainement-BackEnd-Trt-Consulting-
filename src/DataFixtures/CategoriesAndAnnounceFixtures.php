@@ -6,7 +6,6 @@ use App\Entity\Category;
 use App\Factory\AnnounceFactory;
 use App\Factory\ApplyValidationFactory;
 use App\Factory\CandidateFactory;
-use App\Factory\PublishValidationFactory;
 use App\Factory\RecruiterFactory;
 use App\Factory\UserFactory;
 use DateTime;
@@ -63,13 +62,9 @@ class CategoriesAndAnnounceFixtures extends Fixture
                 ]
             );
 
-            $validAnnounce = PublishValidationFactory::createOne([
-                'recruiter' => $recruiter->getRecruiter(),
-                'announce' => $announce,
-            ]);
 
-            if ($validAnnounce->isAnnounceIsValid() === true) {
-                $validAnnounces[] = $validAnnounce;
+            if ($announce->isIsValid() === true) {
+                $validAnnounces[] = $announce;
             }
 
         }
@@ -90,7 +85,7 @@ class CategoriesAndAnnounceFixtures extends Fixture
 
             ApplyValidationFactory::createOne([
                 'candidate' => $candidate,
-                'announce' => $validAnnounce->getAnnounce(),
+                'announce' => $validAnnounce,
             ]);
         }
     }

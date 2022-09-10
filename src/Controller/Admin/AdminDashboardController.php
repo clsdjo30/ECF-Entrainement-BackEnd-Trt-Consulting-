@@ -9,10 +9,9 @@ use App\Entity\ApplyValidation;
 use App\Entity\Candidate;
 use App\Entity\Category;
 use App\Entity\Consultant;
-use App\Entity\PublishValidation;
 use App\Entity\User;
+use App\Repository\AnnounceRepository;
 use App\Repository\ApplyValidationRepository;
-use App\Repository\PublishValidationRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -28,22 +27,22 @@ class AdminDashboardController extends AbstractDashboardController
 {
     protected AdminUrlGenerator $adminUrlGenerator;
     protected ApplyValidationRepository $applyValidationRepository;
-    protected PublishValidationRepository $publishValidationRepository;
+    protected AnnounceRepository $announceRepository;
 
 
     /**
      * @param AdminUrlGenerator $adminUrlGenerator
      * @param ApplyValidationRepository $applyValidationRepository
-     * @param PublishValidationRepository $publishValidationRepository
+     * @param AnnounceRepository $announceRepository ;
      */
     public function __construct(
         AdminUrlGenerator $adminUrlGenerator,
         ApplyValidationRepository $applyValidationRepository,
-        PublishValidationRepository $publishValidationRepository
+        AnnounceRepository $announceRepository
     ) {
         $this->adminUrlGenerator = $adminUrlGenerator;
         $this->applyValidationRepository = $applyValidationRepository;
-        $this->publishValidationRepository = $publishValidationRepository;
+        $this->$this->announceRepository = $announceRepository;
     }
 
     #[Route('/admin', name: 'admin')]
@@ -74,7 +73,7 @@ class AdminDashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         $numPendingCandidate = $this->applyValidationRepository->getNumPendingCandidate();
-        $numPendingAnnounces = $this->publishValidationRepository->getNumPendingAnnounce();
+        $numPendingAnnounces = $this->announceRepository->getNumPendingAnnounce();
 
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
 
@@ -86,7 +85,7 @@ class AdminDashboardController extends AbstractDashboardController
             ->setBadge($numPendingCandidate, 'warning');
 
         yield MenuItem::section('Announces à valider');
-        yield MenuItem::linkToCrud('A vérifier', 'fa fa-circle-exclamation', PublishValidation::class)
+        yield MenuItem::linkToCrud('A vérifier', 'fa fa-circle-exclamation', Announce::class)
             ->setBadge($numPendingAnnounces, 'warning');
 
         yield MenuItem::section('Les Annonces');
