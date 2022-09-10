@@ -53,4 +53,13 @@ class AnnounceRepository extends ServiceEntityRepository
 
         return $totalPendingAnnounce->getQuery()->getSingleScalarResult();
     }
+
+    public function findByRecruiterId($id): void
+    {
+        $activeAnnounce = $this->createQueryBuilder('an')
+            ->where('an.recruiter = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -55,8 +55,9 @@
                             </li>
                             <li>
                                 <button class="dropdown-item" type="button">
-                                    <a href="{#  #}"></a>
-                                    Mes annonces
+                                    <a href="{{ path('app_announce_recruiter', {id: app.user.recruiter.id}) }}">
+                                        Mes annonces
+                                    </a>
                                 </button>
                             </li>
                             <li>

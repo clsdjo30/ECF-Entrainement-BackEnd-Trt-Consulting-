@@ -98,5 +98,17 @@ class AnnounceController extends AbstractController
         ]);
     }
 
+    #[Route('/recruiter/{id}', name: 'app_announce_recruiter', methods: ['GET', 'POST']), isGranted('ROLE_RECRUITER')]
+    #[ParamConverter('announce', options: ['id' => 'announce_id'])]
+    public function showRecruiterAnnounce(
+        AnnounceRepository $announceRepository
+    ): Response {
+        $announces = $announceRepository->findBy(['recruiter' => $this->getUser()->getRecruiter()]);
+
+        return $this->render('announce/recruiter_announce.html.twig', [
+            'announces' => $announces,
+        ]);
+    }
+
 
 }
