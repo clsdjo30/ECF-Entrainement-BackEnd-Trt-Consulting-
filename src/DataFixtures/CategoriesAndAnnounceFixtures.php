@@ -3,12 +3,9 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
-use App\Factory\AddressFactory;
 use App\Factory\AnnounceFactory;
 use App\Factory\ApplyValidationFactory;
 use App\Factory\CandidateFactory;
-use App\Factory\CompanyFactory;
-use App\Factory\PublishValidationFactory;
 use App\Factory\RecruiterFactory;
 use App\Factory\UserFactory;
 use DateTime;
@@ -47,39 +44,27 @@ class CategoriesAndAnnounceFixtures extends Fixture
         // Création de 10 Recruteurs qui créent chacun 2 annonces
         for ($i = 0; $i < 30; $i++) {
             //1 user avec le role recruiter
-            $user = UserFactory::createOne([
+            $recruiter = UserFactory::createOne([
                 'roles' => ['ROLE_RECRUITER'],
                 'createdAt' => new DateTime(),
                 'updatedAt' => new DateTime(),
                 'isValidated' => true,
                 'isVerified' => true,
-            ]);
-
-            $recruiter = RecruiterFactory::createOne([
-                'user_id' => $user,
-
-            ]);
-            CompanyFactory::createOne([
-                'recruiter' => $recruiter,
-                'address_id' => AddressFactory::createOne(),
+                'recruiter' => RecruiterFactory::createOne(),
             ]);
 
 
             $category = $this->getReference('cat-'.random_int(1, 8));
             $announce = AnnounceFactory::createOne(
                 [
-                    'recruiter' => $recruiter,
+                    'recruiter' => $recruiter->getRecruiter(),
                     'category' => $category,
                 ]
             );
 
-            $validAnnounce = PublishValidationFactory::createOne([
-                'recruiter' => $recruiter,
-                'announce' => $announce,
-            ]);
 
-            if ($validAnnounce->isAnnounceIsValid() === true) {
-                $validAnnounces[] = $validAnnounce;
+            if ($announce->isIsValid() === true) {
+                $validAnnounces[] = $announce;
             }
 
         }
@@ -100,7 +85,7 @@ class CategoriesAndAnnounceFixtures extends Fixture
 
             ApplyValidationFactory::createOne([
                 'candidate' => $candidate,
-                'announce' => $validAnnounce->getAnnounce(),
+                'announce' => $validAnnounce,
             ]);
         }
     }

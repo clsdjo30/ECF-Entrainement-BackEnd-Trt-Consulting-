@@ -1,0 +1,44 @@
+<div class="container d-flex justify-content-center align-items-center h-100 w-100">
+    <div class="card w-75">
+        <div class="card-body">
+            <div class="card-header mb-5">
+                <h1 class="text-center display-5 text-capitalize">compléter mon profil</h1>
+            </div>
+
+
+            {{ form_start(recruiterForm) }}
+
+            <div class="col-md-8 px-5 mb-4">
+                {{ form_label(recruiterForm.companyName) }}
+                {{ form_widget(recruiterForm.companyName) }}
+            </div>
+            <div class="col-md-12 px-5 mb-4">
+                {{ form_label(recruiterForm.address) }}
+                {{ form_widget(recruiterForm.address) }}
+            </div>
+            <div class="row mb-5 px-5 mb-4">
+                <div class="col-md-4">
+                    {{ form_label(recruiterForm.city) }}
+                    {{ form_widget(recruiterForm.city) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_label(recruiterForm.postalCode) }}
+                    {{ form_widget(recruiterForm.postalCode) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_label(recruiterForm.country) }}
+                    {{ form_widget(recruiterForm.country) }}
+                </div>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="col-12 btn  btn-outline-primary">
+                    Soumettre
+                </button>
+            </div>
+            {{ form_end(recruiterForm) }}
+
+            <div class="card-footer">
+            </div>
+        </div>
+    </div>
+</div>

@@ -4,9 +4,9 @@ namespace App\Factory;
 
 use App\Entity\Recruiter;
 use App\Repository\RecruiterRepository;
-use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
+use Zenstruck\Foundry\RepositoryProxy;
 
 /**
  * @extends ModelFactory<Recruiter>
@@ -28,30 +28,28 @@ use Zenstruck\Foundry\Proxy;
  */
 final class RecruiterFactory extends ModelFactory
 {
-    public function __construct()
-    {
-        parent::__construct();
 
-        // TODO inject services if required (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services)
+    protected static function getClass(): string
+    {
+        return Recruiter::class;
     }
 
     protected function getDefaults(): array
     {
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
+            'company_name' => self::faker()->company(),
+            'address' => self::faker()->address(),
+            'city' => self::faker()->city(),
+            'country' => self::faker()->country(),
+            'postal_code' => self::faker()->numberBetween(10000, 100000),
+
         ];
     }
 
     protected function initialize(): self
     {
         // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-        return $this
-            // ->afterInstantiate(function(Recruiter $recruiter): void {})
-        ;
-    }
-
-    protected static function getClass(): string
-    {
-        return Recruiter::class;
+        return $this// ->afterInstantiate(function(Recruiter $recruiter): void {})
+            ;
     }
 }

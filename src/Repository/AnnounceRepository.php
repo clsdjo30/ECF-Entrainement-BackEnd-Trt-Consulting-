@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Announce;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +41,25 @@ class AnnounceRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Announce[] Returns an array of Announce objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getNumPendingAnnounce()
+    {
+        $totalPendingAnnounce = $this->createQueryBuilder('val')
+            ->where('val.isValid = true')
+            ->select('COUNT(val.id) as value');
 
-//    public function findOneBySomeField($value): ?Announce
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $totalPendingAnnounce->getQuery()->getSingleScalarResult();
+    }
+
+    public function findByRecruiterId($id): void
+    {
+        $activeAnnounce = $this->createQueryBuilder('an')
+            ->where('an.recruiter = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
 }

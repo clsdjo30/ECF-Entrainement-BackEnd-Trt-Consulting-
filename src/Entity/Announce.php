@@ -9,9 +9,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Slug;
+use Gedmo\Mapping\Annotation\Timestampable;
 use Stringable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: AnnounceRepository::class)]
@@ -24,56 +24,48 @@ class Announce implements Stringable
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
     private ?string $experience = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank]
     private ?int $salary = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
     private ?string $hourly = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
     private ?string $benefits = null;
 
     #[ORM\Column(length: 255)]
     #[Slug(fields: ["title"])]
-    #[Assert\NotBlank]
     private ?string $slug = null;
 
     #[ORM\Column]
     private ?bool $isValid = null;
 
     #[ORM\Column(type: 'datetime')]
+    #[Timestampable(on: 'create')]
     private ?DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: 'datetime')]
+    #[Timestampable(on: 'update')]
     private ?DateTimeInterface $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'announces')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'announces')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Category $category = null;
 
-    #[ORM\ManyToOne(inversedBy: 'announce_id')]
+    #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'announce_id')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Recruiter $recruiter = null;
 
     #[ORM\OneToMany(mappedBy: 'announce', targetEntity: ApplyValidation::class, orphanRemoval: true)]
     private Collection $appliedCandidates;
-
-    #[ORM\OneToOne(mappedBy: 'announce', cascade: ['persist', 'remove'])]
-    private ?PublishValidation $publishValidation = null;
 
     public function __construct()
     {
@@ -255,23 +247,6 @@ class Announce implements Stringable
                 $appliedCandidate->setAnnounce(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getPublishValidation(): ?PublishValidation
-    {
-        return $this->publishValidation;
-    }
-
-    public function setPublishValidation(PublishValidation $publishValidation): self
-    {
-        // set the owning side of the relation if necessary
-        if ($publishValidation->getAnnounce() !== $this) {
-            $publishValidation->setAnnounce($this);
-        }
-
-        $this->publishValidation = $publishValidation;
 
         return $this;
     }

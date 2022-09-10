@@ -6,6 +6,7 @@ use App\Repository\RecruiterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RecruiterRepository::class)]
 class Recruiter
@@ -15,24 +16,33 @@ class Recruiter
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: Company::class, cascade: [
-        'persist',
-        'remove',
-    ], orphanRemoval: true)]
-    private Collection $company_id;
-
     #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: Announce::class, orphanRemoval: true)]
     private Collection $announce_id;
-
-    #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: PublishValidation::class, orphanRemoval: true)]
-    private Collection $publishValidations;
 
     #[ORM\OneToOne(mappedBy: 'recruiter', cascade: ['persist', 'remove'])]
     private ?User $user_id = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank]
+    private ?string $address = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank]
+    private ?string $city = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank]
+    private ?string $country = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank]
+    private ?int $postal_code = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $company_name = null;
+
     public function __construct()
     {
-        $this->company_id = new ArrayCollection();
         $this->announce_id = new ArrayCollection();
         $this->publishValidations = new ArrayCollection();
     }
@@ -40,28 +50,6 @@ class Recruiter
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function addCompanyId(Company $companyId): self
-    {
-        if (!$this->company_id->contains($companyId)) {
-            $this->company_id->add($companyId);
-            $companyId->setRecruiter($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCompanyId(Company $companyId): self
-    {
-        if ($this->company_id->removeElement($companyId)) {
-            // set the owning side to null (unless already changed)
-            if ($companyId->getRecruiter() === $this) {
-                $companyId->setRecruiter(null);
-            }
-        }
-
-        return $this;
     }
 
     /**
@@ -88,36 +76,6 @@ class Recruiter
             // set the owning side to null (unless already changed)
             if ($announceId->getRecruiter() === $this) {
                 $announceId->setRecruiter(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, PublishValidation>
-     */
-    public function getPublishValidations(): Collection
-    {
-        return $this->publishValidations;
-    }
-
-    public function addPublishValidation(PublishValidation $publishValidation): self
-    {
-        if (!$this->publishValidations->contains($publishValidation)) {
-            $this->publishValidations->add($publishValidation);
-            $publishValidation->setRecruiter($this);
-        }
-
-        return $this;
-    }
-
-    public function removePublishValidation(PublishValidation $publishValidation): self
-    {
-        if ($this->publishValidations->removeElement($publishValidation)) {
-            // set the owning side to null (unless already changed)
-            if ($publishValidation->getRecruiter() === $this) {
-                $publishValidation->setRecruiter(null);
             }
         }
 
@@ -151,38 +109,64 @@ class Recruiter
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function showCompanyName(): array
+    public function getAddress(): ?string
     {
-        $companies = $this->company_id;
-        $companyNames = [];
-        foreach ($companies as $company) {
-            $companyNames[] = $company->getName();
-        }
-
-        return $companyNames;
+        return $this->address;
     }
 
-    /**
-     * @return array
-     */
-    public function showCompanyCity(): array
+    public function setAddress(string $address): self
     {
-        $companies = $this->company_id;
-        $companyNames = [];
-        $adresses = [];
+        $this->address = $address;
 
-        foreach ($companies as $company) {
-            $companyNames[] = $company->getAddressId();
-            foreach ($companyNames as $companyName) {
-                $adresses[] = $companyName->getCity();
-            }
-        }
-
-        return $adresses;
+        return $this;
     }
 
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): self
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?int
+    {
+        return $this->postal_code;
+    }
+
+    public function setPostalCode(int $postal_code): self
+    {
+        $this->postal_code = $postal_code;
+
+        return $this;
+    }
+
+    public function getCompanyName(): ?string
+    {
+        return $this->company_name;
+    }
+
+    public function setCompanyName(string $company_name): self
+    {
+        $this->company_name = $company_name;
+
+        return $this;
+    }
 
 }

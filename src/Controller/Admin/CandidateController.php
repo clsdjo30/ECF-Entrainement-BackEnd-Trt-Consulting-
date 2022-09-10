@@ -42,7 +42,7 @@ class CandidateController extends AbstractController
     }
 
     /**
-     * Displays a form to edit an existing Post entity.
+     * Displays a form to edit an existing Candidate Entity.
      */
     #[Route('/{id}/edit', name: 'app_candidate_edit', methods: ['GET', 'POST'])]
     public function edit(

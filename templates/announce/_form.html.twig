@@ -1,0 +1,61 @@
+<div class="container d-flex justify-content-center align-items-center h-100 w-100">
+    <div class="card w-75">
+        <div class="card-body">
+            <div class="card-header mb-5">
+                <h1 class="text-center display-5 text-capitalize">Mon Annonce</h1>
+            </div>
+
+            <div class="card-text py-3  ">
+                {{ form_start(createAnnounceForm) }}
+                <div class="row px-4 mb-5">
+                    <div class="col-md-6">
+                        {{ form_label(createAnnounceForm.title) }}
+                        {{ form_widget(createAnnounceForm.title) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(createAnnounceForm.category) }}
+                        {{ form_widget(createAnnounceForm.category) }}
+                    </div>
+                </div>
+                <!-- Row Description -->
+                <div class="row  mb-5 px-4">
+                    <div class="col-md-12">
+                        {{ form_label(createAnnounceForm.description) }}
+                        {{ form_widget(createAnnounceForm.description) }}
+                    </div>
+                </div>
+                <!-- Row Description -->
+                <div class="row mt-5 px-4">
+                    <div class="col-md-4">
+                        {{ form_label(createAnnounceForm.hourly) }}
+                        {{ form_widget(createAnnounceForm.hourly) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_label(createAnnounceForm.experience) }}
+                        {{ form_widget(createAnnounceForm.experience) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_label(createAnnounceForm.salary) }}
+                        {{ form_widget(createAnnounceForm.salary) }}
+                    </div>
+                </div>
+                <!--Row for Benefits -->
+                <div class="row  my-5 px-4">
+                    <div class="col-md-6 ">
+                        {{ form_label(createAnnounceForm.benefits) }}
+                        {{ form_widget(createAnnounceForm.benefits, {'attr' :{'class':'form-select'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="col-12 btn  btn-outline-primary">
+                    Soumettre
+                </button>
+            </div>
+            {{ form_end(createAnnounceForm) }}
+
+            <div class="card-footer">
+            </div>
+        </div>
+    </div>
+</div>
