@@ -12,7 +12,6 @@ use Gedmo\Mapping\Annotation\Slug;
 use Gedmo\Mapping\Annotation\Timestampable;
 use Stringable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: AnnounceRepository::class)]
@@ -25,32 +24,25 @@ class Announce implements Stringable
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
     private ?string $experience = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank]
     private ?int $salary = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
     private ?string $hourly = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
     private ?string $benefits = null;
 
     #[ORM\Column(length: 255)]
     #[Slug(fields: ["title"])]
-    #[Assert\NotBlank]
     private ?string $slug = null;
 
     #[ORM\Column]
@@ -64,8 +56,8 @@ class Announce implements Stringable
     #[Timestampable(on: 'update')]
     private ?DateTimeInterface $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'announces')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'announces')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Category $category = null;
 
     #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'announce_id')]

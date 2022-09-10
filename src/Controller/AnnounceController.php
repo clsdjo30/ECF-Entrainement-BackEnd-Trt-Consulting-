@@ -6,6 +6,7 @@ use App\Entity\Announce;
 use App\Form\AnnounceType;
 use App\Repository\AnnounceRepository;
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -53,16 +54,19 @@ class AnnounceController extends AbstractController
 
         $announce = new Announce();
 
-        $form = ($this->createForm(AnnounceType::class, $announce))
-            ->handleRequest($request);
+        $form = $this->createForm(AnnounceType::class, $announce);
+        $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $announce = $form->getData();
-            $announce->setIsValid(false)
-                ->setRecruiter($this->getUser()->getRecruiter());
+            $announce = ($form->getData())
+                ->setIsValid(false)
+                ->setRecruiter($this->getUser()->getRecruiter())
+                ->setCreatedat(new DateTime())
+                ->setUpdatedAt(new DateTime());
 
 
-            $manager->persist($announce);;
+            $manager->persist($announce);
             $manager->flush();
 
             $this->addFlash(
@@ -75,13 +79,15 @@ class AnnounceController extends AbstractController
                 ['id' => 'app.user.recruiter.id'],
                 Response::HTTP_SEE_OTHER
             );
+
         }
 
-
         return $this->renderForm('announce/create_announce.html.twig', [
+            'announce' => $announce,
             'createAnnounceForm' => $form,
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_announce_details', methods: ['GET', 'POST']), isGranted('ROLE_CANDIDATE')]
     public function showAnnounceDetails(
