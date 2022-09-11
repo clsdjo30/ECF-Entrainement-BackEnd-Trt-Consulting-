@@ -87,7 +87,7 @@ class UserCrudController extends AbstractCrudController
         parent::updateEntity($entityManager, $entityInstance);
         $userEmail = $entityInstance->getEmail();
 
-        if ($entityInstance->isIsValidated(false)) {
+        if ($entityInstance->isIsValidated() === false) {
             $email = (new TemplatedEmail())
                 ->from(new Address('d1133854c0-21dbeb@inbox.mailtrap.io', 'Trt Consulting'))
                 ->to($userEmail)
