@@ -102,7 +102,8 @@ class AdminDashboardController extends AbstractDashboardController
         );
 
         yield MenuItem::section('Utilisateurs');
-        yield MenuItem::linkToCrud('Consultants', 'fa fa-house-user', Consultant::class);
+        yield MenuItem::linkToCrud('Consultants', 'fa fa-house-user', Consultant::class)
+            ->setPermission("ROLE_ADMIN");
         yield MenuItem::linkToCrud('Candidats', 'fa fa-utensils', Candidate::class);
 
 
