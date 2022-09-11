@@ -41,16 +41,16 @@
                                 </div>
                                 <div class="card-footer d-flex justify-content-end">
 
-                                    {# if (announce.isApplied(app.user.candidate)) #}
-                                    <p class="text-success text-xl">
-                                        Votre candidature est en cours de traitement !
-                                    </p>
-                                    {# else #}
-                                    <a href="{{ path('app_announce_details', {id: announce.id}) }} "
-                                       class="btn btn-primary">
-                                        Postuler en 1 click
-                                    </a>
-                                    {# endif #}
+                                    {% if (announce.isApplied(app.user.candidate)) %}
+                                        <p class="text-success text-xl">
+                                            Votre candidature est en cours de traitement !
+                                        </p>
+                                    {% else %}
+                                        <a href="{{ path('app_announce_details', {id: announce.id}) }} "
+                                           class="btn btn-primary">
+                                            Postuler en 1 click
+                                        </a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

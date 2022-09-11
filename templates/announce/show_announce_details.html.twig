@@ -49,11 +49,11 @@
 
 
                     <div class="d-flex justify-content-around card-footer bg-transparent border-secondary">
-                        <a href="{# path('app_annonces_applied',  {id: announce.id, }) #}"
+                        <a href="{{ path('app_annonces_applied',  {id: announce.id, }) }}"
                            class="btn btn-primary text-uppercase" type="submit">
                             ajouter ma candidature
                         </a>
-                        <a href="{{ path('app_announces') }}" class="btn btn-outline-secondary">
+                        <a href="{{ path('app_announce') }}" class="btn btn-outline-secondary">
                             Revenir aux annonces
                         </a>
                     </div>

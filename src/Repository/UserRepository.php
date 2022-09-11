@@ -61,10 +61,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * @return array
      */
-    public function findUserNotActive(): array
+    public function findUserActive(): array
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.isValidated = false')
+            ->andWhere('u.isValidated = true')
             ->getQuery()
             ->getResult();
     }

@@ -6,6 +6,7 @@ use App\Entity\Announce;
 use App\Form\AnnounceType;
 use App\Repository\AnnounceRepository;
 use App\Repository\UserRepository;
+use App\Service\AppliedCandidate;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -28,7 +29,7 @@ class AnnounceController extends AbstractController
         Request $request
     ): Response {
 
-        if ($userRepository->findUserNotActive()) {
+        if (!$userRepository->findUserActive()) {
             throw $this->createAccessDeniedException();
         }
 
@@ -110,5 +111,24 @@ class AnnounceController extends AbstractController
         ]);
     }
 
+    /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+    #[Route('/applied/{id}', name: 'app_annonces_applied', methods: ['GET', 'POST'])]
+    #[ParamConverter('candidat', options: ['id' => 'announce_id'])]
+    #[ParamConverter('applyValidation', options: ['id' => 'applyValidation_id'])]
+    public function appliedCandidate(
+        AppliedCandidate $appliedCandidate,
+        Announce $announce
+    ): Response {
+        $candidate = $this->getUser()->getCandidate();
+
+        if ($appliedCandidate->addCandidateForValidation($announce, $candidate)) {
+            $this->addFlash('success', 'Votre candidature a bien été transmise !');
+        }
+
+
+        return $this->redirectToRoute('app_announce');
+
+
+    }
 
 }
