@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\Crud;
 
 use App\Entity\ApplyValidation;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -10,9 +11,22 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 
 class ApplyValidationCrudController extends AbstractCrudController
 {
+    private MailerInterface $mailer;
+
+    public function __construct(
+        MailerInterface $mailer,
+    ) {
+        $this->mailer = $mailer;
+    }
+
     public static function getEntityFqcn(): string
     {
         return ApplyValidation::class;
@@ -54,5 +68,44 @@ class ApplyValidationCrudController extends AbstractCrudController
 
         ];
     }
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param $entityInstance
+     * @return void
+     * @throws TransportExceptionInterface
+     */
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::updateEntity($entityManager, $entityInstance);
+
+        $recruiterEmail = $entityInstance->getAnnounce()->getRecruiter()->getUserId()->getEmail();
+        $candidateFullName = $entityInstance->getCAndidate()->fullName();
+        $candidateCv = $entityInstance->getCandidate()->getCvFile();
+
+
+        if ($entityInstance->isCandidateIsValid()) {
+
+            $email = (new TemplatedEmail())
+                ->from(new Address('d1133854c0-21dbeb@inbox.mailtrap.io', 'Trt Consulting'))
+                ->to($recruiterEmail)
+                ->subject('Vous avez reçu une candidature!')
+                ->context([
+                    'candidate' => $candidateFullName,
+                ])
+                ->text('Pour plus de renseignements, merci de contacté notre équipe par mail.!')
+                ->htmlTemplate('email/applied_candidate_email.html.twig')
+                ->attachFromPath(
+                    new File(
+                        $this->getParameter('cvs_directory').'/'.$candidateCv
+                    )
+                );
+
+            $this->addFlash('success', "Un Email avec les information du candidat vient d'être envoyé au recruteur !");
+
+            $this->mailer->send($email);
+        }
+    }
+
 
 }
