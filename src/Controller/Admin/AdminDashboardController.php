@@ -42,7 +42,7 @@ class AdminDashboardController extends AbstractDashboardController
     ) {
         $this->adminUrlGenerator = $adminUrlGenerator;
         $this->applyValidationRepository = $applyValidationRepository;
-        $this->$this->announceRepository = $announceRepository;
+        $this->announceRepository = $announceRepository;
     }
 
     #[Route('/', name: 'admin')]

@@ -17,15 +17,23 @@
                     <a class="btn btn primary btn-outline-primary me-2" href="{{ path('admin') }}">Administration</a>
                     <a class="btn btn primary btn-outline-primary me-2" href="{{ path('app_logout') }}">Déconnexion</a>
                 {% elseif is_granted('ROLE_CONSULTANT') %}
-                    <a class="btn btn primary btn-outline-warning me-2">Vous êtes connecté en tant que :
+                    <button type="button" class="btn btn-outline-primary me-2">
                         {% for role in app.user.roles %}
                             {% if role == 'ROLE_CONSULTANT' %}
-                                Consultant
+                                <a class="text-decoration-none fs-6 text-black"
+                                   href="{{ path('admin') }}">
+                                    Mon Compte Consultant
+                                </a>
                             {% endif %}
                         {% endfor %}
-                    </a>
-                    <a class="btn btn primary btn-outline-primary me-2" href="{# route admin #}">Mon Compte</a>
-                    <a class="btn btn primary btn-outline-primary me-2" href="{{ path('app_logout') }}">Déconnexion</a>
+                    </button>
+                    <button class="btn btn primary btn-outline-primary me-2">
+                        <a class="text-decoration-none fs-6 text-black"
+                           href="{{ path('app_logout') }}">
+                            Déconnexion
+                        </a>
+
+                    </button>
                 {% elseif is_granted('ROLE_RECRUITER') %}
                     <div class="btn-group">
                         <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown"
