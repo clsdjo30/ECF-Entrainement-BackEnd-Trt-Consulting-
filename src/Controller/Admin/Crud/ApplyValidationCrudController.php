@@ -50,7 +50,7 @@ class ApplyValidationCrudController extends AbstractCrudController
             IdField::new('id')->hideOnIndex()->onlyOnForms()->hideWhenUpdating(),
             AssociationField::new('candidate', 'Candidat'),
             AssociationField::new('announce', 'Annonce'),
-            BooleanField::new('candidateIsValid', 'Validé'),
+            BooleanField::new('candidateIsValid', 'Validé')->renderAsSwitch(false),
 
         ];
     }

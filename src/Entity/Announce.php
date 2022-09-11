@@ -66,7 +66,7 @@ class Announce implements Stringable
 
     #[ORM\OneToMany(mappedBy: 'announce', targetEntity: ApplyValidation::class, orphanRemoval: true)]
     private Collection $appliedCandidates;
-
+    
     public function __construct()
     {
         $this->appliedCandidates = new ArrayCollection();
