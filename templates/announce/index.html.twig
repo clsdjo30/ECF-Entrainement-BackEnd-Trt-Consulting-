@@ -6,7 +6,8 @@
     {% if is_granted('ROLE_CANDIDATE') %}
 
         <div class="container">
-            <h1 class="text-center display-5 text-capitalize py-5">Offres d'emploi</h1>
+            {{ include('candidate/profil/_profil_candidate_navigation.html.twig') }}
+            <h1 class="text-center display-5 text-capitalize">Offres d'emploi</h1>
 
             <div class="col">
 

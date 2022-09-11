@@ -1,0 +1,18 @@
+<!-- Account page navigation-->
+<nav class="nav nav-borders">
+    <a class="nav-link active ms-0"
+       href="{{ path('app_candidate_details', {id: app.user.candidate.id}) }}" target="__blank">
+        Profil
+    </a>
+    <a class="nav-link text-capitalize"
+       href="{{ path('app_announce') }}">
+        Toutes les annonces
+    </a>
+    <a class="nav-link text-capitalize"
+       href="{# lien vers les announce auxquelles le candidat a postuler #}">
+        Mes annonces
+    </a>
+
+
+</nav>
+<hr class="mt-0 mb-4">
