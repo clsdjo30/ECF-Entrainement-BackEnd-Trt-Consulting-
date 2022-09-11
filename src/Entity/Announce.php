@@ -221,14 +221,6 @@ class Announce implements Stringable
         return $this;
     }
 
-    /**
-     * @return Collection<int, ApplyValidation>
-     */
-    public function getAppliedCandidates(): Collection
-    {
-        return $this->appliedCandidates;
-    }
-
     public function addAppliedCandidate(ApplyValidation $appliedCandidate): self
     {
         if (!$this->appliedCandidates->contains($appliedCandidate)) {
@@ -254,5 +246,22 @@ class Announce implements Stringable
     public function __toString(): string
     {
         return $this->title;
+    }
+
+    public function isApplied(Candidate $candidate): int
+    {
+        return !$this->getAppliedCandidates()->filter(function (ApplyValidation $applyValidation) use ($candidate) {
+            return $applyValidation->getCandidate() === $candidate;
+
+        }
+        )->isEmpty();
+    }
+
+    /**
+     * @return Collection<int, ApplyValidation>
+     */
+    public function getAppliedCandidates(): Collection
+    {
+        return $this->appliedCandidates;
     }
 }

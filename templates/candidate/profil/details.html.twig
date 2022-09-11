@@ -6,24 +6,9 @@
 
 {% block content %}
 
-    <div class="container-xl px-4 mt-4">
+    <div class="container-xl px-4 mt-5">
+        {{ include('candidate/profil/_profil_candidate_navigation.html.twig') }}
         <!-- Account page navigation-->
-        <nav class="nav nav-borders">
-            <a class="nav-link active ms-0"
-               href="{{ path('app_candidate_details', {id: app.user.candidate.id}) }}" target="__blank">
-                Mon Profil
-            </a>
-            <a class="nav-link"
-               href="#">
-                Toutes les Annonces
-            </a>
-            <a class="nav-link"
-               href="#" target="__blank">
-                Mes Annonces
-            </a>
-
-        </nav>
-        <hr class="mt-0 mb-4">
         <div class="row">
             <div class="col-xl-4">
                 <!-- Profile picture card-->
@@ -56,7 +41,7 @@
 
                                     <label class="small mb-1" for="inputFirstName">Prénom</label>
                                     <input class="form-control" id="inputFirstName" type="text"
-                                           placeholder="Enter your first name"
+                                           placeholder="Prénom"
                                            value="{{ app.user.candidate.firstname }}">
                                 </div>
                             </div>
@@ -66,7 +51,7 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputOrgName">Nom de famille</label>
                                     <input class="form-control" id="inputOrgName" type="text"
-                                           placeholder="Enter your organization name"
+                                           placeholder="Nom de famille"
                                            value="{{ app.user.candidate.lastname }}">
                                 </div>
                             </div>
@@ -76,7 +61,7 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputPhone">Mon Cv</label>
                                     <input class="form-control" id="inputPhone" type="tel"
-                                           placeholder="Enter your phone number"
+                                           placeholder="Téléchargez votre CV au format Pdf"
                                            value="{{ app.user.candidate.cvFile }}">
 
                                 </div>
