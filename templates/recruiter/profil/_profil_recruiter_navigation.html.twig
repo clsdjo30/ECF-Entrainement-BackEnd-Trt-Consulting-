@@ -1,0 +1,21 @@
+<!-- Account page navigation-->
+<nav class="nav nav-borders">
+    <a class="nav-link active ms-0"
+       href="{{ path('app_recruiter_details', {id: app.user.recruiter.id}) }}" target="__blank">
+        Profil
+    </a>
+    <a class="nav-link text-capitalize"
+       href="{{ path('app_announce_recruiter', {id: app.user.recruiter.id}) }}">
+        Annonces
+    </a>
+    <a class="nav-link text-capitalize"
+       href="{{ path('app_announce_new') }}" target="__blank">
+        Publier une annonce
+    </a>
+    <a class="nav-link text-capitalize"
+       href="#">
+        Candidatures
+    </a>
+
+</nav>
+<hr class="mt-0 mb-4">

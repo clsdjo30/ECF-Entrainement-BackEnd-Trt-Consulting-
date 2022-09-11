@@ -5,29 +5,8 @@
 {% endblock %}
 
 {% block content %}
-
-    <div class="banner  container-xl px-4 mt-4">
-        <!-- Account page navigation-->
-        <nav class="nav nav-borders">
-            <a class="nav-link active ms-0"
-               href="{{ path('app_recruiter_details', {id: app.user.recruiter.id}) }}">
-                Mon Profil
-            </a>
-            <a class="nav-link text-capitalize"
-               href="{{ path('app_announce_recruiter', {id: app.user.recruiter.id}) }}">
-                mes annonces
-            </a>
-            <a class="nav-link text-capitalize"
-               href="{{ path('app_announce_new') }}">
-                Publier une annonce
-            </a>
-            <a class="nav-link text-capitalize"
-               href="#">
-                Voir les Candidatures
-            </a>
-
-        </nav>
-        <hr class="mt-0 mb-4">
+    <div class="container-xl px-4 mt-5">
+        {{ include('recruiter/profil/_profil_recruiter_navigation.html.twig') }}
         <div class="row">
             <div class="col-xl-4">
 
@@ -123,7 +102,6 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
 
 

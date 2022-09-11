@@ -7,30 +7,11 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <div class="banner  container-xl px-4 mt-4">
-        <!-- Account page navigation-->
-        <nav class="nav nav-borders">
-            <a class="nav-link active ms-0"
-               href="{{ path('app_recruiter_details', {id: app.user.recruiter.id}) }}" target="__blank">
-                Mon Profil
-            </a>
-            <a class="nav-link text-capitalize"
-               href="{{ path('app_announce_recruiter', {id: app.user.recruiter.id}) }}">
-                mes annonces
-            </a>
-            <a class="nav-link text-capitalize"
-               href="{{ path('app_announce_new') }}" target="__blank">
-                Publier une annonce
-            </a>
-            <a class="nav-link text-capitalize"
-               href="#">
-                Voir les Candidatures
-            </a>
-
-        </nav>
-        <hr class="mt-0 mb-4">
+    <div class="container h-100 d-flex flex-column justify-content-center align-items-center px-4 mt-4">
+        {{ include('recruiter/profil/_profil_recruiter_navigation.html.twig') }}
 
         {{ include('recruiter/profil/_form.html.twig') }}
     </div>
+
 
 {% endblock %}

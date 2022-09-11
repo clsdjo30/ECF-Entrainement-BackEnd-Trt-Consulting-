@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://us-cdbr-east-06.cleardb.net:3306/heroku_d66451b93216831</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="ECF Trt Consulting" uuid="10c5880d-d4d9-4bc3-98d8-15ea5781afc6">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://127.0.0.1:3306/ecf_trt_consulting</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
