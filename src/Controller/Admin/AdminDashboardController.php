@@ -36,6 +36,7 @@ class AdminDashboardController extends AbstractDashboardController
      * @param AdminUrlGenerator $adminUrlGenerator
      * @param ApplyValidationRepository $applyValidationRepository
      * @param AnnounceRepository $announceRepository ;
+     * @param UserRepository $userRepository
      */
     public function __construct(
         AdminUrlGenerator $adminUrlGenerator,
@@ -106,4 +107,5 @@ class AdminDashboardController extends AbstractDashboardController
 
 
     }
+
 }

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\Crud;
 
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -55,10 +56,26 @@ class UserCrudController extends AbstractCrudController
         yield EmailField::new('email');
         yield TextField::new('password', 'Mot de Passe')->hideOnForm();
         yield ArrayField::new('roles', 'Roles');
-        yield BooleanField::new('isVerified', 'Vérifié');
-        yield BooleanField::new('isValidated', 'Validé');
+        yield BooleanField::new('isVerified', 'Vérifié')->renderAsSwitch(false);
+        yield BooleanField::new('isValidated', 'Validé')->renderAsSwitch(false);
         yield AssociationField::new('recruiter', 'Recruteur')->hideOnIndex()->hideOnForm();
         yield AssociationField::new('candidate', 'Candidats')->hideOnIndex()->hideOnForm();
+    }
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param $entityInstance
+     * @return void
+     */
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::updateEntity($entityManager, $entityInstance);
+
+        if ($entityInstance->isIsValidated()) {
+            $this->addFlash('success', "Vous venez d'activer un nouveau membre ! ");
+        } else {
+            $this->addFlash('warning', "Vous venez de désactiver un membre ! ");
+        }
     }
 
 
