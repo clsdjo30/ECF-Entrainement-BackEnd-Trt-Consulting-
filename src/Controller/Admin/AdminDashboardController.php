@@ -22,7 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[IsGranted('ROLE_CONSULTANT')]
+#[Route('/admin'), isGranted('ROLE_CONSULTANT')]
 class AdminDashboardController extends AbstractDashboardController
 {
     protected AdminUrlGenerator $adminUrlGenerator;
@@ -45,7 +45,7 @@ class AdminDashboardController extends AbstractDashboardController
         $this->$this->announceRepository = $announceRepository;
     }
 
-    #[Route('/admin', name: 'admin')]
+    #[Route('/', name: 'admin')]
     public function index(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_CONSULTANT');
