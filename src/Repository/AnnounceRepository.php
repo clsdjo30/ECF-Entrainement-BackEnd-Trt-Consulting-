@@ -48,7 +48,7 @@ class AnnounceRepository extends ServiceEntityRepository
     public function getNumPendingAnnounce()
     {
         $totalPendingAnnounce = $this->createQueryBuilder('val')
-            ->where('val.isValid = true')
+            ->where('val.isValid = false')
             ->select('COUNT(val.id) as value');
 
         return $totalPendingAnnounce->getQuery()->getSingleScalarResult();
