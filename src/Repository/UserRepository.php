@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -76,5 +78,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->andWhere('u.email')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getNumPendingUsers()
+    {
+        $totalPendingUser = $this->createQueryBuilder('u')
+            ->where('u.isValidated = false')
+            ->select('COUNT(u.id) as value');
+
+        return $totalPendingUser->getQuery()->getSingleScalarResult();
     }
 }

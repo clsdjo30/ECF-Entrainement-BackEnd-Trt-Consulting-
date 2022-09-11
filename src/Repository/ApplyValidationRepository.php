@@ -48,7 +48,7 @@ class ApplyValidationRepository extends ServiceEntityRepository
     public function getNumPendingCandidate()
     {
         $totalPendingAnnounce = $this->createQueryBuilder('val')
-            ->where('val.candidateIsValid = true')
+            ->where('val.candidateIsValid = false')
             ->select('COUNT(val.id) as value');
 
         return $totalPendingAnnounce->getQuery()->getSingleScalarResult();

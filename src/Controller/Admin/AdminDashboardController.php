@@ -12,6 +12,7 @@ use App\Entity\Consultant;
 use App\Entity\User;
 use App\Repository\AnnounceRepository;
 use App\Repository\ApplyValidationRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -28,6 +29,7 @@ class AdminDashboardController extends AbstractDashboardController
     protected AdminUrlGenerator $adminUrlGenerator;
     protected ApplyValidationRepository $applyValidationRepository;
     protected AnnounceRepository $announceRepository;
+    protected UserRepository $userRepository;
 
 
     /**
@@ -38,11 +40,13 @@ class AdminDashboardController extends AbstractDashboardController
     public function __construct(
         AdminUrlGenerator $adminUrlGenerator,
         ApplyValidationRepository $applyValidationRepository,
-        AnnounceRepository $announceRepository
+        AnnounceRepository $announceRepository,
+        UserRepository $userRepository
     ) {
         $this->adminUrlGenerator = $adminUrlGenerator;
         $this->applyValidationRepository = $applyValidationRepository;
         $this->announceRepository = $announceRepository;
+        $this->userRepository = $userRepository;
     }
 
     #[Route('/', name: 'admin')]
@@ -74,11 +78,13 @@ class AdminDashboardController extends AbstractDashboardController
     {
         $numPendingCandidate = $this->applyValidationRepository->getNumPendingCandidate();
         $numPendingAnnounces = $this->announceRepository->getNumPendingAnnounce();
+        $numPendingUsers = $this->userRepository->getNumPendingUsers();
 
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
 
         yield MenuItem::section('Nouveaux Inscrits');
-        yield MenuItem::linkToCrud('A valider', 'fa fa-circle-exclamation', User::class);
+        yield MenuItem::linkToCrud('A valider', 'fa fa-circle-exclamation', User::class)
+            ->setBadge($numPendingUsers, 'warning');
 
         yield MenuItem::section('Candidature à valider');
         yield MenuItem::linkToCrud('A vérifier', 'fa fa-circle-exclamation', ApplyValidation::class)
