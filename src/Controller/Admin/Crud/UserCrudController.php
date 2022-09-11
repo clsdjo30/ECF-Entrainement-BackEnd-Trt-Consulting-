@@ -14,9 +14,21 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 
 class UserCrudController extends AbstractCrudController
 {
+    private MailerInterface $mailer;
+
+    public function __construct(
+        MailerInterface $mailer,
+    ) {
+        $this->mailer = $mailer;
+    }
+
     public static function getEntityFqcn(): string
     {
         return User::class;
@@ -66,11 +78,33 @@ class UserCrudController extends AbstractCrudController
      * @param EntityManagerInterface $entityManager
      * @param $entityInstance
      * @return void
+     * @throws TransportExceptionInterface
      */
-    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
-    {
+    public function updateEntity(
+        EntityManagerInterface $entityManager,
+        $entityInstance
+    ): void {
         parent::updateEntity($entityManager, $entityInstance);
+        $userEmail = $entityInstance->getEmail();
 
+        if ($entityInstance->isIsValidated(false)) {
+            $email = (new TemplatedEmail())
+                ->from(new Address('d1133854c0-21dbeb@inbox.mailtrap.io', 'Trt Consulting'))
+                ->to($userEmail)
+                ->subject('Votre compte a été désactivé ! ')
+                ->text('Pour plus de renseignements, merci de contacté notre équipe par mail.!')
+                ->htmlTemplate('email/deactivate_user_account_email.html.twig');
+
+        } else {
+            $email = (new TemplatedEmail())
+                ->from(new Address('d1133854c0-21dbeb@inbox.mailtrap.io', 'Trt Consulting'))
+                ->to($userEmail)
+                ->subject('Votre compte est actif ! ')
+                ->text('Rendez vous sur votre page de connection pour profiter de nos services!')
+                ->htmlTemplate('email/valid_user_account_email.html.twig');
+
+        }
+        $this->mailer->send($email);
         if ($entityInstance->isIsValidated()) {
             $this->addFlash('success', "Vous venez d'activer un nouveau membre ! ");
         } else {
