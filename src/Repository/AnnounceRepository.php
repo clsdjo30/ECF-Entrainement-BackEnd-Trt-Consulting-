@@ -62,4 +62,17 @@ class AnnounceRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @return float|int|mixed|string
+     */
+    public function countValidAnnounces(): mixed
+    {
+        $totalFailed = $this->createQueryBuilder('m')
+            ->where('m.isValid = true')
+            ->select('COUNT(m.id) as value');
+
+        return $totalFailed->getQuery()->getResult();
+
+    }
 }

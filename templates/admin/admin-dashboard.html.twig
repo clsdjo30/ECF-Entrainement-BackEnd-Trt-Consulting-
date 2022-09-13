@@ -11,4 +11,59 @@
         </div>
     {% endfor %}
 
+    <div class="container justify-content-center w-100">
+        <section class="row  mt-1">
+            <h2 class="text-center display-5">Données à traiter</h2>
+            <div class="row row-cols-1 row-cols-md-4 g-4 mt-0 justify-content-center">
+                <div class="col">
+                    <div class="card rounded-3 shadow border-1 border-warning bg-transparent">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Nouveaux Inscrits</h3>
+
+                            <p class="display-6 text-center text-warning">{{ inscrits }}</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card rounded-3 shadow border-1 border-info bg-transparent">
+                        <div class="card-body">
+                            <h3 class="card-title text-center">Nouvelles annonces</h3>
+
+                            <p class="display-6 text-center text-info">{{ annonces }}</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card rounded-3 shadow border-1 border-success bg-transparent">
+                        <div class="card-body">
+                            <h3 class="card-title text-center">Nouvelles Candidatures</h3>
+
+                            <p class="display-6 text-center text-success">{{ candidatures }}</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-1">
+                <div class="col-12 mt-4">
+                    <div class="card  border-1 rounded-3 border-1 border-dark  bg-transparent">
+                        <div class="card-body">
+                            <div class="col">
+                                {% for validAnnonce in validAnnonces %}
+
+                                    <h2 class="card-title text-center">Il y a actuellement {{ validAnnonce.value }}
+                                        annonces
+                                        validées sur le site</h2>
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
 {% endblock %}
