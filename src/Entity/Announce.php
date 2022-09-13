@@ -10,13 +10,12 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Slug;
 use Gedmo\Mapping\Annotation\Timestampable;
-use Stringable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 #[ORM\Entity(repositoryClass: AnnounceRepository::class)]
 #[UniqueEntity(fields: ['slug'], message: 'announce.slug_unique', errorPath: 'title')]
-class Announce implements Stringable
+class Announce
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -66,7 +65,7 @@ class Announce implements Stringable
 
     #[ORM\OneToMany(mappedBy: 'announce', targetEntity: ApplyValidation::class, orphanRemoval: true)]
     private Collection $appliedCandidates;
-    
+
     public function __construct()
     {
         $this->appliedCandidates = new ArrayCollection();

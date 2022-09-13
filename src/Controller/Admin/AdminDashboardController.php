@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Controller\Admin\Crud\CategoryCrudController;
-use App\Controller\Admin\Crud\UserCrudController;
 use App\Entity\Announce;
 use App\Entity\ApplyValidation;
 use App\Entity\Candidate;
@@ -50,16 +49,21 @@ class AdminDashboardController extends AbstractDashboardController
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
     #[Route('/', name: 'admin')]
     public function index(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_CONSULTANT');
 
-        $url = $this->adminUrlGenerator
-            ->setController(UserCrudController::class)
-            ->generateUrl();
-
-        return $this->redirect($url);
+        return $this->render('admin/admin-dashboard.html.twig', [
+            'inscrits' => $this->userRepository->getNumPendingUsers(),
+            'annonces' => $this->announceRepository->getNumPendingAnnounce(),
+            'candidatures' => $this->applyValidationRepository->getNumPendingCandidate(),
+            'validAnnonces' => $this->announceRepository->countValidAnnounces(),
+        ]);
 
 
     }
