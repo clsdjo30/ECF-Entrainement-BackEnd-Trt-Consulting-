@@ -3,32 +3,31 @@
 namespace App\Tests\Unit\Entity;
 
 use App\Entity\Announce;
-use App\Entity\Company;
-use App\Entity\PublishValidation;
 use App\Entity\Recruiter;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
 class RecruiterTest extends TestCase
 {
-    public function testAddAndRemoveCompanyIsTrue(): void
+
+    public function testCandidateIsTrue(): void
     {
-        $company = new Company();
-
         $user = new User();
+        $candidate = (new Recruiter())
+            ->setCompanyName('Test Name')
+            ->setAddress('adresse de test')
+            ->setCity('Ville de test')
+            ->setCountry('pays de test')
+            ->setPostalCode(30000)
+            ->setUserId($user);
+        $this->assertTrue((bool)$candidate->getCompanyName('Test Name'));
+        $this->assertTrue((bool)$candidate->getAddress('adresse de test'));
+        $this->assertTrue((bool)$candidate->getCity('ville de test'));
+        $this->assertTrue((bool)$candidate->getCountry('pays de test'));
+        $this->assertTrue((bool)$candidate->getPostalCode(30000));
+        $this->assertTrue((bool)$candidate->getUserId());
+        
 
-        $recruiter = (new Recruiter())
-            ->addCompanyId($company);
-
-        $this->assertTrue((bool)$recruiter->getCompanyId());
-
-        $recruiter->removeCompanyId($company);
-
-        $this->assertEmpty($recruiter->getCompanyId());
-
-        $recruiter->setUserId($user);
-
-        $this->assertSame($recruiter->getUserId(), $user);
     }
 
     public function testAddAndRemoveAnnounceIsTrue(): void
@@ -45,19 +44,5 @@ class RecruiterTest extends TestCase
         $this->assertEmpty($recruiter->getAnnounceId());
     }
 
-    public function testAnnouncePublishValidationIsTrue(): void
-    {
-        $newPublish = new PublishValidation();
-        $recruiter = (new Recruiter())
-            ->addPublishValidation($newPublish);
-
-        $this->assertTrue((bool)$recruiter->getPublishValidations());
-
-        $recruiter->removePublishValidation($newPublish);
-
-        $this->assertCount(0, $recruiter->getPublishValidations());
-
-
-    }
 
 }

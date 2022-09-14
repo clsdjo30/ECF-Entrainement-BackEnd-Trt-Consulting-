@@ -6,21 +6,30 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class HomeTest extends WebTestCase
 {
-    public function testShouldDisplayHomepage(): void
+    public function testHomePageTitle(): void
     {
         $client = static::createClient();
         $client->request('GET', '/');
 
 
-        self::assertPageTitleSame('TrT Consulting - Home Page');
-
-
+        self::assertSelectorTextContains('h1', 'pour vous servir');
     }
 
-    public function test404(): void
+    public function testVerificationEmail(): void
     {
-        $client = self::createClient();
-        $client->request('GET', '/404');
-        self::assertTrue($client->getResponse()->isNotFound());
+        $client = static::createClient();
+        $client->request('GET', '/verification');
+
+
+        self::assertSelectorTextContains('h1', 'Confirmer votre adresse email');
+    }
+
+    public function testPendingValidation(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/first-connexion');
+
+
+        self::assertSelectorTextContains('h1', 'Pour accéder à nos services, rendez-vous sur votre compte');
     }
 }

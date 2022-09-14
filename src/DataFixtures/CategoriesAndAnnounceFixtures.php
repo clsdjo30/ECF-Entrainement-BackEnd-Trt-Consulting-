@@ -14,6 +14,9 @@ use Doctrine\Persistence\ObjectManager;
 use Exception;
 
 
+/**
+ * @codeCoverageIgnore
+ */
 class CategoriesAndAnnounceFixtures extends Fixture
 {
     private int $counter = 1;

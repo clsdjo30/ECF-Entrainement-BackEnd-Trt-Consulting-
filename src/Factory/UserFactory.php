@@ -28,6 +28,8 @@ use Zenstruck\Foundry\RepositoryProxy;
  */
 final class UserFactory extends ModelFactory
 {
+    public const DEFAULT_PASSWORD = '1234';
+
     public function __construct()
     {
 
@@ -48,7 +50,7 @@ final class UserFactory extends ModelFactory
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
             'email' => self::faker()->email(),
             'roles' => ['ROLE_USER'],
-            'password' => self::faker()->text(),
+            'password' => '$argon2id$v=19$m=65536,t=4,p=1$pLFF3D2gnvDmxMuuqH4BrA$3vKfv0cw+6EaNspq9btVAYc+jCOqrmWRstInB2fRPeQ',
         ];
     }
 

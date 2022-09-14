@@ -56,4 +56,11 @@ class UserTest extends TestCase
 
         $this->assertTrue($user->isIsValidated());
     }
+
+    public function testUserIsVerifiedTrue(): void
+    {
+        $user = (new User())->setIsVerified(true);
+
+        $this->assertTrue($user->isVerified());
+    }
 }
