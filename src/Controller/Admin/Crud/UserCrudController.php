@@ -97,7 +97,7 @@ class UserCrudController extends AbstractCrudController
 
         } else {
             $email = (new TemplatedEmail())
-                ->from(new Address('lesergent.cedric@gmail.com', 'Trt Consulting'))
+                ->from(new Address('dev-test@ikmail.com', 'Trt Consulting'))
                 ->to($userEmail)
                 ->subject('Votre compte est actif ! ')
                 ->text('Rendez vous sur votre page de connection pour profiter de nos services!')

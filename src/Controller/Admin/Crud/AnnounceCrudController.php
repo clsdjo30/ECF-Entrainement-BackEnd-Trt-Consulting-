@@ -75,7 +75,7 @@ class AnnounceCrudController extends AbstractCrudController
         if ($entityInstance->isIsValid()) {
 
             $email = (new TemplatedEmail())
-                ->from(new Address('lesergent.cedric@gmail.com', 'Trt Consulting'))
+                ->from(new Address('dev-test@ikmail.com', 'Trt Consulting'))
                 ->to($recruiterEmail)
                 ->subject('Votre annonce est approuvée !')
                 ->text('Pour plus de renseignements, merci de contacté notre équipe par mail.!')
