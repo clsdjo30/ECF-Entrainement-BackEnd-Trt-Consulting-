@@ -89,7 +89,7 @@ class UserCrudController extends AbstractCrudController
 
         if ($entityInstance->isIsValidated() === false) {
             $email = (new TemplatedEmail())
-                ->from(new Address('contact@c-and-com.studio', 'Trt Consulting'))
+                ->from(new Address('lesergent.cedric@gmail.com', 'Trt Consulting'))
                 ->to($userEmail)
                 ->subject('Votre compte a été désactivé ! ')
                 ->text('Pour plus de renseignements, merci de contacté notre équipe par mail.!')
@@ -97,7 +97,7 @@ class UserCrudController extends AbstractCrudController
 
         } else {
             $email = (new TemplatedEmail())
-                ->from(new Address('contact@c-and-com.studio', 'Trt Consulting'))
+                ->from(new Address('lesergent.cedric@gmail.com', 'Trt Consulting'))
                 ->to($userEmail)
                 ->subject('Votre compte est actif ! ')
                 ->text('Rendez vous sur votre page de connection pour profiter de nos services!')
