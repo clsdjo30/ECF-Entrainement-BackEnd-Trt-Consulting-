@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -49,7 +50,8 @@ class AnnounceCrudController extends AbstractCrudController
             TextField::new('hourly', 'Horaire'),
             TextField::new('slug', 'Slug'),
             BooleanField::new('isValid', 'Validé')->renderAsSwitch(false),
-
+            DateField::new('createdAt', 'Crée le'),
+            DateField::new('updatedAt', 'mise a jour'),
 
         ];
 
