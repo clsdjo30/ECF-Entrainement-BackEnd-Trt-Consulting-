@@ -80,14 +80,15 @@ class ApplyValidationCrudController extends AbstractCrudController
         parent::updateEntity($entityManager, $entityInstance);
 
         $recruiter = $entityInstance->getAnnounce()->getRecruiter()->getUserId()->getEmail();
-       
+        $candidate = $entityInstance->getCandidate()->getUser()->getEmail();
+
         $candidateFullName = $entityInstance->getCandidate()->fullName();
         $candidateCv = $entityInstance->getCandidate()->getCvFile();
 
 
         if ($entityInstance->isCandidateIsValid()) {
 
-            $email = (new TemplatedEmail())
+            $recruiterEmail = (new TemplatedEmail())
                 ->from(new Address('contact@c-and-com.studio', 'Trt Consulting'))
                 ->to($recruiter)
                 ->subject('Vous avez reçu une candidature!')
@@ -102,9 +103,24 @@ class ApplyValidationCrudController extends AbstractCrudController
                     )
                 );
 
-            $this->addFlash('success', "Un Email avec les information du candidat vient d'être envoyé au recruteur !");
+            $candidateEmail = (new TemplatedEmail())
+                ->from(new Address('contact@c-and-com.studio', 'Trt Consulting'))
+                ->to($candidate)
+                ->subject('Vous avez reçu une candidature!')
+                ->context([
+                    'candidate' => $candidateFullName,
+                ])
+                ->text('Pour plus de renseignements, merci de contacté notre équipe par mail.!')
+                ->htmlTemplate('email/apply_confirmation_email.html.twig');
 
-            $this->mailer->send($email);
+
+            $this->addFlash(
+                'success',
+                "Un Email avec les informations du candidat vient d'être envoyé au recruteur et un Email de validation de candidature au candidat"
+            );
+
+            $this->mailer->send($recruiterEmail);
+            $this->mailer->send($candidateEmail);
         }
     }
 
