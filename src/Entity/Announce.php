@@ -244,7 +244,7 @@ class Announce
 
     public function __toString(): string
     {
-        return $this->title;
+        return $this->recruiter->getCompanyName();
     }
 
     public function isApplied(Candidate $candidate): int

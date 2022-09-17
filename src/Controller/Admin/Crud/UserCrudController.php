@@ -66,7 +66,7 @@ class UserCrudController extends AbstractCrudController
     {
         yield IdField::new('id')->hideOnIndex()->hideOnForm();
         yield EmailField::new('email');
-        yield TextField::new('password', 'Mot de Passe')->hideOnForm();
+        yield TextField::new('password', 'Mot de Passe')->hideOnForm()->hideOnIndex()->hideOnDetail();
         yield ArrayField::new('roles', 'Roles');
         yield BooleanField::new('isVerified', 'Vérifié')->renderAsSwitch(false);
         yield BooleanField::new('isValidated', 'Validé')->renderAsSwitch(false);
