@@ -87,7 +87,7 @@ class ApplyValidationCrudController extends AbstractCrudController
         if ($entityInstance->isCandidateIsValid()) {
 
             $email = (new TemplatedEmail())
-                ->from(new Address('dev-test@ikmail.com', 'Trt Consulting'))
+                ->from(new Address('contact@c-and-com.studio', 'Trt Consulting'))
                 ->to($recruiterEmail)
                 ->subject('Vous avez reçu une candidature!')
                 ->context([
