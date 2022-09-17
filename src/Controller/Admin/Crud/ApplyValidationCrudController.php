@@ -79,7 +79,8 @@ class ApplyValidationCrudController extends AbstractCrudController
     {
         parent::updateEntity($entityManager, $entityInstance);
 
-        $recruiterEmail = $entityInstance->getAnnounce()->getRecruiter()->getUserId()->getEmail();
+        $recruiter = $entityInstance->getAnnounce()->getRecruiter()->getUserId();
+        $recruiter->getEmail();
         $candidateFullName = $entityInstance->getCandidate()->fullName();
         $candidateCv = $entityInstance->getCandidate()->getCvFile();
 
@@ -88,7 +89,7 @@ class ApplyValidationCrudController extends AbstractCrudController
 
             $email = (new TemplatedEmail())
                 ->from(new Address('contact@c-and-com.studio', 'Trt Consulting'))
-                ->to($recruiterEmail)
+                ->to($recruiter)
                 ->subject('Vous avez reçu une candidature!')
                 ->context([
                     'candidate' => $candidateFullName,
