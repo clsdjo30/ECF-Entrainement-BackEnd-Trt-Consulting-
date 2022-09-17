@@ -70,7 +70,7 @@ class UserCrudController extends AbstractCrudController
         yield ArrayField::new('roles', 'Roles');
         yield BooleanField::new('isVerified', 'Vérifié')->renderAsSwitch(false);
         yield BooleanField::new('isValidated', 'Validé')->renderAsSwitch(false);
-        yield AssociationField::new('recruiter', 'Recruteur')->hideOnIndex()->hideOnForm();
+        yield AssociationField::new('recruiter', 'Recruteur')->hideOnIndex();
         yield AssociationField::new('candidate', 'Candidats')->hideOnIndex()->hideOnForm();
     }
 

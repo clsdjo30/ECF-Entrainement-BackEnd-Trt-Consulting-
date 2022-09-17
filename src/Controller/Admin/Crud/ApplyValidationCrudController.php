@@ -79,8 +79,8 @@ class ApplyValidationCrudController extends AbstractCrudController
     {
         parent::updateEntity($entityManager, $entityInstance);
 
-        $recruiter = $entityInstance->getAnnounce()->getRecruiter()->getUserId();
-        $recruiter->getEmail();
+        $recruiter = $entityInstance->getAnnounce()->getRecruiter()->getUserId()->getEmail();
+       
         $candidateFullName = $entityInstance->getCandidate()->fullName();
         $candidateCv = $entityInstance->getCandidate()->getCvFile();
 

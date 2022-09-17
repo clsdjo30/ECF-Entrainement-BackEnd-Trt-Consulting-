@@ -84,7 +84,7 @@ class Recruiter
 
     public function __toString(): string
     {
-        return $this->company_name;
+        return $this->getUserId();
     }
 
     public function getUserId(): ?User
