@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Recruiter;
 use App\Form\RecruiterType;
 use App\Repository\RecruiterRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -30,9 +31,14 @@ class RecruiterController extends AbstractController
     #[Route('/{id}', name: 'app_recruiter_details', methods: ['GET', 'POST'])]
     #[ParamConverter('recruiter', options: ['id' => 'recruiter_id'])]
     public function recruiterShow(
-        Recruiter $recruiter
+        UserRepository $userRepository
     ): Response {
 
+        $recruiter = new Recruiter();
+
+        if ($userRepository->findBy(['isValidated' => false])) {
+            throw $this->createAccessDeniedException();
+        }
 
         return $this->render('recruiter/profil/details.html.twig', [
             'recruiter' => $recruiter,
@@ -40,19 +46,6 @@ class RecruiterController extends AbstractController
         ]);
     }
 
-    /*
-   * Display information about the Recruiter
-   */
-    #[Route('/{id}', name: 'app_recruiter_details', methods: ['GET', 'POST'])]
-    #[ParamConverter('recruiter', options: ['id' => 'recruiter_id'])]
-    public function candidateShow(): Response
-    {
-        $candidate = new Recruiter();
-
-        return $this->render('recruiter/profil/details.html.twig', [
-            'candidate' => $candidate,
-        ]);
-    }
 
     #[Route('/{id}/edit', name: 'app_recruiter_edit')]
     public function edit(

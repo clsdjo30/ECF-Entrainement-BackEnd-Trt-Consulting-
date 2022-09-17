@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Candidate;
 use App\Form\CandidateType;
 use App\Repository\CandidateRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -19,8 +20,16 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class CandidateController extends AbstractController
 {
     #[Route('/', name: 'app_candidate', methods: ('GET'))]
-    public function index(CandidateRepository $candidateRepository): Response
-    {
+    public function index(
+        CandidateRepository $candidateRepository,
+        UserRepository $userRepository
+    ): Response {
+
+
+        if (!$userRepository->findBy(['isValidated' => true])) {
+            throw $this->createAccessDeniedException();
+        }
+
         return $this->render('candidate/index.html.twig', [
             'candidate' => $candidateRepository->findAll(),
         ]);
@@ -32,9 +41,15 @@ class CandidateController extends AbstractController
      */
     #[Route('/{id}', name: 'app_candidate_details', methods: ['GET', 'POST'])]
     #[ParamConverter('candidate', options: ['id' => 'candidate_id'])]
-    public function candidateShow(): Response
-    {
+    public function candidateShow(
+        UserRepository $userRepository
+    ): Response {
+
         $candidate = new Candidate();
+
+        if ($userRepository->findOneBy(['isValidated' => false])) {
+            throw $this->createAccessDeniedException();
+        }
 
         return $this->render('candidate/profil/details.html.twig', [
             'candidate' => $candidate,

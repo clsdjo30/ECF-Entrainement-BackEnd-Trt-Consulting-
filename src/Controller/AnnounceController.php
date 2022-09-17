@@ -29,7 +29,7 @@ class AnnounceController extends AbstractController
         Request $request
     ): Response {
 
-        if (!$userRepository->findUserActive()) {
+        if ($userRepository->findBy(['isValidated' => false])) {
             throw $this->createAccessDeniedException();
         }
 
@@ -51,7 +51,12 @@ class AnnounceController extends AbstractController
     public function new(
         Request $request,
         EntityManagerInterface $manager,
+        UserRepository $userRepository
     ): Response {
+
+        if ($userRepository->findBy(['isValidated' => false])) {
+            throw $this->createAccessDeniedException();
+        }
 
         $announce = new Announce();
 
